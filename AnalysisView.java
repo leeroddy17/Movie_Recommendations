@@ -1,5 +1,6 @@
 package analysisView;
 
+import java.sql.*;
 import javax.swing.*;    
 import java.awt.event.*;
 import java.awt.*;
@@ -9,6 +10,7 @@ public class AnalysisView
 {
 	public static void main(String[] args) // maybe pass the strings of the movies as arguments here
 	{
+		
 		JFrame analysistView = new JFrame();
 		JLabel userTitle = new JLabel(); // a panel for a title
 		JLabel TITLE = new JLabel(); // main title that should never be touched ever again
