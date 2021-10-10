@@ -3,11 +3,41 @@ package contentView;
 import javax.swing.*;    
 import java.awt.event.*;
 import java.awt.*;
+import query.query;
+import java.sql.*;
+
 
 public class contentView
 {
+    // private query sqlQuery;
+    // private Integer customerId;
+    // private String endDate;
+    // private String startDate;
+    // private String genre;
+
 	public static void main(String[] args) // maybe pass the strings of the movies as arguments here
 	{
+
+        query sqlQuery = new query();
+         //REPLACE THESE
+         Integer customerId = 1488844;
+         String endDate = "2005-09-06";
+         String startDate = "2000-09-06";
+         ////////////////////////////////
+ 
+         ResultSet watchHistory = sqlQuery.WatchHistory(customerId, startDate, endDate); 
+         try {
+             while (watchHistory.next()) {
+                 System.out.println(watchHistory.getString(1));
+             }
+         } catch (Exception e) {
+             System.out.println(e);
+         }
+         finally {
+             sqlQuery.CloseConnection();
+         }
+         //Set up to call more queries
+         //Queries are already set up in query.java
 		
 		JFrame contentView = new JFrame();
 		JLabel userTitle = new JLabel(); // a panel for a title
