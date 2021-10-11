@@ -1,17 +1,30 @@
-package contentView;
-
-import java.sql.*;
 import javax.swing.*;    
 import java.awt.event.*;
 import java.awt.*;
-import connectDatabase.connect;
+import java.sql.*;
 
-public class contentView
+
+public class contentView 
 {
+    // private query sqlQuery;
+    // private Integer customerId;
+    // private String endDate;
+    // private String startDate;
+    // private String genre;
+
 	public static void main(String[] args) // maybe pass the strings of the movies as arguments here
 	{
+
+        query sqlQuery = new query();
+         //REPLACE THESE
+         Integer customerId = 1488844;
+         String endDate = "2005-09-06";
+         String startDate = "2000-09-06";
+         ////////////////////////////////
         
-       
+        
+         //Set up to call more queries
+         //Queries are already set up in query.java
 		
 		JFrame contentView = new JFrame();
 		JLabel userTitle = new JLabel(); // a panel for a title
@@ -19,7 +32,23 @@ public class contentView
 		
 		
 		String UserName = "Carlos"; // get the users name and put it here later
-		
+        JButton okButton = new JButton("Click for watch history");
+        okButton.setBounds(500, 800, 300, 200);
+        contentView.add(okButton);
+        okButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ResultSet watchHistory = sqlQuery.WatchHistory(customerId, startDate, endDate); 
+                try {
+                    String displayWatchHistory = "";
+                    while (watchHistory.next()) {
+                        displayWatchHistory += watchHistory.getString(1) + "\n";
+                    }
+                    JOptionPane.showMessageDialog(null, displayWatchHistory);
+                } catch (Exception err) {
+                    System.out.println(err);
+                }
+            }
+         });
 		
 		userTitle.setBounds(100,-100, 1000, 300);
 		userTitle.setFont(new Font("Times New Roman", Font.PLAIN, 50));
@@ -79,8 +108,7 @@ public class contentView
           
         contentView.setSize(10000, 10000); // initial size of the frame can still be changed by the user
         contentView.setLayout(null);
-    
-
-		
+        contentView.setVisible(true);
 	}
+
 }
