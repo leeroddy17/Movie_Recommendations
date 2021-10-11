@@ -4,7 +4,7 @@ import java.awt.*;
 import java.sql.*;
 
 
-public class contentView
+public class contentView 
 {
     // private query sqlQuery;
     // private Integer customerId;
@@ -21,18 +21,8 @@ public class contentView
          String endDate = "2005-09-06";
          String startDate = "2000-09-06";
          ////////////////////////////////
- 
-         ResultSet watchHistory = sqlQuery.WatchHistory(customerId, startDate, endDate); 
-         try {
-             while (watchHistory.next()) {
-                 System.out.println(watchHistory.getString(1));
-             }
-         } catch (Exception e) {
-             System.out.println(e);
-         }
-         finally {
-             sqlQuery.CloseConnection();
-         }
+        
+        
          //Set up to call more queries
          //Queries are already set up in query.java
 		
@@ -42,7 +32,23 @@ public class contentView
 		
 		
 		String UserName = "Carlos"; // get the users name and put it here later
-		
+        JButton okButton = new JButton("Click for watch history");
+        okButton.setBounds(500, 800, 300, 200);
+        contentView.add(okButton);
+        okButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ResultSet watchHistory = sqlQuery.WatchHistory(customerId, startDate, endDate); 
+                try {
+                    String displayWatchHistory = "";
+                    while (watchHistory.next()) {
+                        displayWatchHistory += watchHistory.getString(1) + "\n";
+                    }
+                    JOptionPane.showMessageDialog(null, displayWatchHistory);
+                } catch (Exception err) {
+                    System.out.println(err);
+                }
+            }
+         });
 		
 		userTitle.setBounds(100,-100, 1000, 300);
 		userTitle.setFont(new Font("Times New Roman", Font.PLAIN, 50));
@@ -103,8 +109,6 @@ public class contentView
         contentView.setSize(10000, 10000); // initial size of the frame can still be changed by the user
         contentView.setLayout(null);
         contentView.setVisible(true);
-        
-
-		
 	}
+
 }

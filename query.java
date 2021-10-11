@@ -9,11 +9,12 @@ CSCE 315
 public class query {
     private connect conn;
     public query() { //Once connected to GUI, the GUI will have the main function, this is just temporary
-        conn = new connect();           //Ideally this will be a constructor that establishes the connection
+        // conn = new connect();           //Ideally this will be a constructor that establishes the connection
 
     }
 
     public ResultSet WatchHistory(Integer customerId, String startDate, String endDate) {
+        conn = new connect(); 
         ResultSet result;
         try {
             Statement stmt = conn.dbConnection.createStatement();
@@ -21,7 +22,7 @@ public class query {
             String sqlStatement = "SELECT originaltitle FROM titles INNER JOIN customer_ratings ON " +
                                     "customer_ratings.titleid=titles.titleid WHERE customer_ratings.customerid=" +
                                     customerId.toString() + 
-                                    " AND '"+startDate+"'<customer_ratings.date AND '"+endDate+"'>customer_ratings.date";
+                                    " AND '"+startDate+"'<customer_ratings.date AND '"+endDate+"'>customer_ratings.date LIMIT 50";
             System.out.println(sqlStatement);
             result = stmt.executeQuery(sqlStatement);
         }
@@ -30,11 +31,12 @@ public class query {
             return null;
         }
 
-            return result;
-
+        conn.Disconnect();
+        return result;
     }
 
     public ResultSet MoviesByGenre(String genre) {
+        conn = new connect(); 
         ResultSet result;
         try {
             Statement stmt = conn.dbConnection.createStatement();
@@ -48,11 +50,13 @@ public class query {
             return null;
         }
 
-            return result;
+        conn.Disconnect();
+        return result;
 
     }
 
     public ResultSet TopRatedMovies(String startDate, String endDate) {
+        conn = new connect(); 
         ResultSet result;
         try {
             Statement stmt = conn.dbConnection.createStatement();
@@ -69,7 +73,8 @@ public class query {
             return null;
         }
 
-            return result;
+        conn.Disconnect();
+        return result;
     }
 
     public void CloseConnection() {
