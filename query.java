@@ -1,5 +1,3 @@
-package query;
-
 import java.sql.*;
 import javax.swing.JOptionPane;
 //import util.dbSetup;
@@ -78,6 +76,7 @@ public class query {
         conn.Disconnect();
     }
 }
+
 class connect {
     public Connection dbConnection;
 

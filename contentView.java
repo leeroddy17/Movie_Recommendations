@@ -1,9 +1,6 @@
-package contentView;
-
 import javax.swing.*;    
 import java.awt.event.*;
 import java.awt.*;
-import query.query;
 import java.sql.*;
 
 
