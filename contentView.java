@@ -37,10 +37,15 @@ public class contentView
         scroll.setSize(600, 400);
         scroll.setLayout(new GridLayout(20, 10, 10, 0));
         ResultSet history = sqlQuery.WatchHistory(customerId, endDate, startDate);
-        for (int i=0; i<n; i++)
-        {
-            History[i] = new JButton("movie");
-            scroll.add(History[i]);
+        try {
+            while(history.next()) {
+                History[i] = new JButton(history.getString(1));
+                scroll.add(History[i]);
+            }
+        } catch (Exception e) {
+            System.out.println("Error fetching data");
+        }
+
         } 
         
         scrollpane = new JScrollPane(scroll);
