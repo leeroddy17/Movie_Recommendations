@@ -1,8 +1,10 @@
 package contentView;
 
+import java.sql.*;
 import javax.swing.*;    
 import java.awt.event.*;
 import java.awt.*;
+import connectDatabase.connect;
 
 
 public class contentView
@@ -125,8 +127,7 @@ public class contentView
           
         contentView.setSize(10000, 10000); // initial size of the frame can still be changed by the user
         contentView.setLayout(null);
-        contentView.setVisible(true);
-        
+    
 
 		
 	}
