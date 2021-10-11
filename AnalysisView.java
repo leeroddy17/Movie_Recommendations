@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+package analysisView;
+
+import java.sql.*;
+>>>>>>> master
 import javax.swing.*;    
 import java.awt.event.*;
 import java.awt.*;
@@ -13,10 +19,14 @@ public class AnalysisView
     // private String genre;
 	public static void main(String[] args) // maybe pass the strings of the movies as arguments here
 	{
+<<<<<<< HEAD
 		query sqlQuery = new query();
 		///////////////////////
 		//Analysis Queries
 		///////////////////////
+=======
+		
+>>>>>>> master
 		JFrame analysistView = new JFrame();
 		JLabel userTitle = new JLabel(); // a panel for a title
 		JLabel TITLE = new JLabel(); // main title that should never be touched ever again
