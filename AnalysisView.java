@@ -54,26 +54,26 @@ public class AnalysisView
 		
 		
 
-		JCheckBox studio1 = new JCheckBox("Warner Bros");
-		JCheckBox studio2 = new JCheckBox("Universal");
-		JCheckBox studio3 = new JCheckBox("Marvel");
-		JCheckBox studio4 = new JCheckBox("DreamWorks");
-		JCheckBox studio5 = new JCheckBox("Sony");
-		JCheckBox studio6 = new JCheckBox("Paramount");
-		JLabel studioTitle = new JLabel("Filter By Studio:");
-		studioTitle.setBounds(500, 125, 100, 100);
-		analysistView.add(studioTitle);
+		// JCheckBox studio1 = new JCheckBox("Warner Bros");
+		// JCheckBox studio2 = new JCheckBox("Universal");
+		// JCheckBox studio3 = new JCheckBox("Marvel");
+		// JCheckBox studio4 = new JCheckBox("DreamWorks");
+		// JCheckBox studio5 = new JCheckBox("Sony");
+		// JCheckBox studio6 = new JCheckBox("Paramount");
+		// JLabel studioTitle = new JLabel("Filter By Studio:");
+		// studioTitle.setBounds(500, 125, 100, 100);
+		// analysistView.add(studioTitle);
 		
-		Box studioBoxes = Box.createVerticalBox();
-		studioBoxes.setBounds(500, 200, 100, 300);
-		studioBoxes.add(studio1);
-		studioBoxes.add(studio2);
-		studioBoxes.add(studio3);
-		studioBoxes.add(studio4);
-		studioBoxes.add(studio5);
-		studioBoxes.add(studio6);
+		// Box studioBoxes = Box.createVerticalBox();
+		// studioBoxes.setBounds(500, 200, 100, 300);
+		// studioBoxes.add(studio1);
+		// studioBoxes.add(studio2);
+		// studioBoxes.add(studio3);
+		// studioBoxes.add(studio4);
+		// studioBoxes.add(studio5);
+		// studioBoxes.add(studio6);
 		
-		analysistView.add(studioBoxes);
+		// analysistView.add(studioBoxes);
 		
 		
 		
