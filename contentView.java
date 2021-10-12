@@ -7,6 +7,11 @@ import java.sql.*;
 
 public class contentView 
 {
+    private static String userId;
+    public contentView(String userId) {
+        this.userId = userId;
+        System.out.println(userId);
+    }
 
 	public static void main(String[] args) // maybe pass the strings of the movies as arguments here
 	{
@@ -36,15 +41,6 @@ public class contentView
         scrollpane.setBounds(100,180,1000,250);
         contentView.add(scrollpane);
         
-        JLabel uidLabel = new JLabel();
-        uidLabel.setText("UID:");
-        uidLabel.setBounds(100, 100, 300, 30);
-        contentView.add(uidLabel);
-
-        JTextField uidField = new JTextField(10);
-        uidField.setBounds(310, 100, 100, 30);
-        contentView.add(uidField);
-
         JLabel dateRangeLabel = new JLabel();
         dateRangeLabel.setText("Watch History From (mm-dd-yyyy): ");
         dateRangeLabel.setBounds(100, 130, 300, 30);
@@ -69,7 +65,7 @@ public class contentView
         contentView.add(calculate);
         calculate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Integer uid = Integer.parseInt(uidField.getText());
+                Integer uid = Integer.parseInt(userId);
                 String startDate = fromDate.getText();
                 String endDate = toDate.getText();
                 ResultSet watchHistory = sqlQuery.WatchHistory(uid, startDate, endDate); 
@@ -91,7 +87,7 @@ public class contentView
 		
 		userTitle.setBounds(100,-100, 1000, 300);
 		userTitle.setFont(new Font("Times New Roman", Font.PLAIN, 50));
-		userTitle.setText("Welcome Back!");
+		userTitle.setText("Hi User: " + userId);
 		contentView.add(userTitle); // Add the name of the user to the 
 		
 		TITLE.setBounds(100, -200, 1000, 300);
