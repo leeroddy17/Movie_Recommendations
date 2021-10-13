@@ -35,31 +35,18 @@ public class contentView
 		int n = 50; // default value that should change
 		JButton[] History = new JButton[n];
         scroll.setSize(600, 400);
-        scroll.setLayout(new GridLayout(20, 10, 10, 0));
-        ResultSet history = sqlQuery.WatchHistory(customerId, endDate, startDate);
-        try {
-            while(history.next()) {
-                History[i] = new JButton(history.getString(1));
-                scroll.add(History[i]);
-            }
-        } catch (Exception e) {
-            System.out.println("Error fetching data");
-        }
-
+        scroll.setLayout(new GridLayout(n, 10, 10, 0));
+ 
+        for (int i=0; i<n; i++)
+        {
+            History[i] = new JButton("movie");
+            scroll.add(History[i]);
         } 
         
         scrollpane = new JScrollPane(scroll);
-        scrollpane.setBounds(100,180,1000,200);
+        scrollpane.setBounds(100,150,1000,200);
         contentView.add(scrollpane);
         
-        JLabel uidLabel = new JLabel();
-        uidLabel.setText("UID:");
-        uidLabel.setBounds(100, 100, 300, 30);
-        contentView.add(uidLabel);
-
-        JTextField uidField = new JTextField(10);
-        uidField.setBounds(310, 100, 100, 30);
-        contentView.add(uidField);
 
         JLabel dateRangeLabel = new JLabel();
         dateRangeLabel.setText("Watch History From (mm-dd-yyyy): ");
@@ -86,10 +73,9 @@ public class contentView
         contentView.add(calculate);
         calculate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Integer uid = Integer.parseInt(uidField.getText());
                 String startDate = fromDate.getText();
                 String endDate = toDate.getText();
-                ResultSet watchHistory = sqlQuery.WatchHistory(uid, startDate, endDate); 
+                ResultSet watchHistory = sqlQuery.WatchHistory(customerId, startDate, endDate); 
                 try {
                     String displayWatchHistory = "";
                     while (watchHistory.next()) {
@@ -136,13 +122,13 @@ public class contentView
         for (int i=0; i<5; i++)
         {
             RecMovies[i] = new JButton("");
-            RecMovies[i].setBounds(100 + 225*i, 515, 200, 60);
+            RecMovies[i].setBounds(100 + 225*i, 485, 200, 60);
             contentView.add(RecMovies[i]);
         } 
         for (int i=5; i<10; i++)
         {
             RecMovies[i] = new JButton("");
-            RecMovies[i].setBounds(100 + 225*(i-5), 595, 200, 60);
+            RecMovies[i].setBounds(100 + 225*(i-5), 565, 200, 60);
             contentView.add(RecMovies[i]);
         }
           
