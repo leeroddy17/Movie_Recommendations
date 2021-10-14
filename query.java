@@ -7,14 +7,14 @@ CSCE 315
 9-25-2019
  */
 public class query {
-    private connect conn;
+    private Connect conn;
     public query() { //Once connected to GUI, the GUI will have the main function, this is just temporary
         // conn = new connect();           //Ideally this will be a constructor that establishes the connection
 
     }
 
     public ResultSet WatchHistory(Integer customerId, String startDate, String endDate) {
-        conn = new connect(); 
+        conn = new Connect(); 
         ResultSet result;
         try {
             Statement stmt = conn.dbConnection.createStatement();
@@ -36,7 +36,7 @@ public class query {
     }
 
     public ResultSet MoviesByGenre(String genre) {
-        conn = new connect(); 
+        conn = new Connect(); 
         ResultSet result;
         try {
             Statement stmt = conn.dbConnection.createStatement();
@@ -56,7 +56,7 @@ public class query {
     }
 
     public ResultSet TopRatedMovies(String startDate, String endDate) {
-        conn = new connect(); 
+        conn = new Connect(); 
         ResultSet result;
         try {
             Statement stmt = conn.dbConnection.createStatement();
@@ -77,41 +77,30 @@ public class query {
         return result;
     }
 
+    public ResultSet CultClassics() {
+        conn = new Connect(); 
+        ResultSet result;
+        try {
+            Statement stmt = conn.dbConnection.createStatement();
+
+            String sqlStatement = "SELECT originaltitle,COUNT(originaltitle)" +
+                                    "FROM titles INNER JOIN customer_ratings ON" +
+                                    "customer_ratings.titleid=titles.titleid" +
+                                    "WHERE customer_ratings.rating>3 GROUP BY originaltitle" +
+                                    "ORDER BY COUNT(originaltitle) DESC LIMIT 30;"
+;
+            result = stmt.executeQuery(sqlStatement);
+        }
+        catch (Exception e){
+            System.out.println("Error accessing Database.");
+            return null;
+        }
+
+        conn.Disconnect();
+        return result;
+    }
     public void CloseConnection() {
         conn.Disconnect();
     }
 }
 
-class connect {
-    public Connection dbConnection;
-
-    public connect() {
-        String url = "jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315_914_2_db";
-        String username = "csce315_914_2_user";
-        String password = "Ravi914";
-        dbConnection = null;
-        try {
-            Class.forName("org.postgresql.Driver");
-            dbConnection = DriverManager.getConnection(url, username, password);
-            //JOptionPane.showMessageDialog(null,"Opened database successfully");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println(e.getClass().getName()+": "+e.getMessage());
-            //JOptionPane.showMessageDialog(null,e.getClass().getName()+": "+e.getMessage());
-            System.exit(0);
-        }//end try catch
-        // JOptionPane.showMessageDialog(null,"Opened database successfully");
-        // System.out.println("Opened database successfully");
-    }
-
-    public void Disconnect() {
-        try {
-            dbConnection.close();
-            System.out.println("Connection Closed.");
-        } 
-            catch(Exception e) {
-            System.out.println("Connection NOT Closed.");
-        }
-    }//end Class
-}
