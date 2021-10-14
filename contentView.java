@@ -38,10 +38,9 @@ public class contentView
         } 
         
         scrollpane = new JScrollPane(scroll);
-        scrollpane.setBounds(100,150,1000,200);
+        scrollpane.setBounds(100,180,1000,250);
         contentView.add(scrollpane);
         
-
         JLabel dateRangeLabel = new JLabel();
         dateRangeLabel.setText("Watch History From (mm-dd-yyyy): ");
         dateRangeLabel.setBounds(100, 130, 300, 30);
@@ -66,9 +65,10 @@ public class contentView
         contentView.add(calculate);
         calculate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                Integer uid = Integer.parseInt(userId);
                 String startDate = fromDate.getText();
                 String endDate = toDate.getText();
-                ResultSet watchHistory = sqlQuery.WatchHistory(customerId, startDate, endDate); 
+                ResultSet watchHistory = sqlQuery.WatchHistory(uid, startDate, endDate); 
                 try {
                     int i=0;
                     while (watchHistory.next()) {
