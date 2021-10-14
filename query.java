@@ -99,6 +99,7 @@ public class query {
         conn.Disconnect();
         return result;
     }
+   
     public void CloseConnection() {
         conn.Disconnect();
     }
