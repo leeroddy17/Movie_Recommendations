@@ -1,6 +1,5 @@
 import java.sql.*;
 import javax.swing.JOptionPane;
-//import util.dbSetup;
 import java.sql.DriverManager;
 /*
 CSCE 315
@@ -77,10 +76,52 @@ public class query {
         return result;
     }
 
+    //Gets all users with ratings greater or equal to 4
+    public ResultSet GetUniqueUsers4andAbove() {
+        conn = new connect(); 
+        ResultSet result;
+        try {
+            Statement stmt = conn.dbConnection.createStatement();
+
+            String sqlStatement = "SELECT DISTINCT customerid FROM customer_ratings WHERE rating>3;";
+            System.out.println(sqlStatement);
+            result = stmt.executeQuery(sqlStatement);
+        }
+        catch (Exception e){
+            System.out.println("Error accessing Database.");
+            return null;
+        }
+
+        conn.Disconnect();
+        return result;
+    }
+
+    //Get a specific user ratings that are 4 or above
+    public ResultSet UserRatings4andAbove(String customerId) {
+        conn = new connect(); 
+        ResultSet result;
+        try {
+            Statement stmt = conn.dbConnection.createStatement();
+
+            String sqlStatement = "SELECT titles.originaltitle FROM customer_ratings INNER JOIN titles ON titles.titleid = customer_ratings.titleid WHERE rating>3 AND customerid = " + customerId + ";";
+            System.out.println(sqlStatement);
+            result = stmt.executeQuery(sqlStatement);
+        }
+        catch (Exception e){
+            System.out.println("Error accessing Database.");
+            return null;
+        }
+
+        conn.Disconnect();
+        return result;
+    }
     public void CloseConnection() {
         conn.Disconnect();
     }
 }
+
+
+
 
 class connect {
     public Connection dbConnection;
