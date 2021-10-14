@@ -99,6 +99,31 @@ public class query {
         conn.Disconnect();
         return result;
     }
+
+
+    public ResultSet TopRecommendations(int customerid) {
+        conn = new Connect();
+        ResultSet result;
+        try {
+            Statement stmt = conn.dbConnection.createStatement();
+            // Returns top 20 recommendations based on finding high-rated, unwatched movies from similiar users
+            String sqlStatement = "SELECT titleid FROM customer_ratings WHERE titleid NOT IN
+             (SELECT titleid FROM customer_ratings WHERE customerid = " + customerid + ") AND customerid IN
+              (SELECT customerid FROM customer_ratings WHERE customerid!=" + customerid + " AND rating>4 AND
+               titleid IN (SELECT titleid FROM customer_ratings WHERE customerid=" + customerid + " AND rating>4 LIMIT 10)
+                LIMIT 10) AND rating >= 4 LIMIT 20;";
+
+            result = stmt.executeQuery(sqlStatement);
+        }
+        catch (Exception e){
+            System.out.println("Error accessing Database.");
+            return null;
+        }
+
+        conn.Disconnect();
+        return result;
+    }
+
     public void CloseConnection() {
         conn.Disconnect();
     }
