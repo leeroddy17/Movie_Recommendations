@@ -7,11 +7,11 @@ import java.sql.*;
 
 public class contentView 
 {
-    // private query sqlQuery;
-    // private Integer customerId;
-    // private String endDate;
-    // private String startDate;
-    // private String genre;
+    private static String userId;
+    public contentView(String userId) {
+        this.userId = userId;
+        System.out.println(userId);
+    }
 
 	public static void main(String[] args) // maybe pass the strings of the movies as arguments here
 	{
@@ -20,13 +20,7 @@ public class contentView
         JScrollPane scrollpane;
         JFrame contentView = new JFrame(); // Make the frame
         query sqlQuery = new query();
-         //REPLACE THESE
-        Integer customerId = 1488844;
-        // String endDate = "2005-09-06";
-        // String startDate = "2000-09-06";
-         ////////////////////////////////
-        
-        
+
          //Set up to call more queries
          //Queries are already set up in query.java
 		
@@ -39,15 +33,14 @@ public class contentView
  
         for (int i=0; i<n; i++)
         {
-            History[i] = new JButton("movie");
+            History[i] = new JButton("");
             scroll.add(History[i]);
         } 
         
         scrollpane = new JScrollPane(scroll);
-        scrollpane.setBounds(100,150,1000,200);
+        scrollpane.setBounds(100,180,1000,250);
         contentView.add(scrollpane);
         
-
         JLabel dateRangeLabel = new JLabel();
         dateRangeLabel.setText("Watch History From (mm-dd-yyyy): ");
         dateRangeLabel.setBounds(100, 130, 300, 30);
@@ -67,35 +60,26 @@ public class contentView
         contentView.add(toDate);
 
         
-        
         JButton calculate = new JButton("Calculate");
         calculate.setBounds(750, 130, 100, 30);
         contentView.add(calculate);
         calculate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                Integer uid = Integer.parseInt(userId);
                 String startDate = fromDate.getText();
                 String endDate = toDate.getText();
-                ResultSet watchHistory = sqlQuery.WatchHistory(customerId, startDate, endDate); 
+                ResultSet watchHistory = sqlQuery.WatchHistory(uid, startDate, endDate); 
                 try {
-                    String displayWatchHistory = "";
+                    int i=0;
                     while (watchHistory.next()) {
-                        displayWatchHistory += watchHistory.getString(1) + "\n";
+                        History[i].setText(watchHistory.getString(1));
+                        i++;
                     }
-                    JOptionPane.showMessageDialog(null, displayWatchHistory);
                 } catch (Exception err) {
                     System.out.println(err);
                 }
             }
          });
-
-        
-        int date1 = 2001; // place holder dates
-        int date2 = 2021;
-        
-        JLabel watched = new JLabel("Watch History between " + date1 + "-" + date2);
-        watched.setBounds(100, 105, 1000, 200);
-        watched.setFont(new Font("Times New Roman", Font.PLAIN, 50));
-        contentView.add(watched);
 		
 		
 		JLabel userTitle = new JLabel(); // a panel for a title
@@ -103,7 +87,7 @@ public class contentView
 		
 		userTitle.setBounds(100,-100, 1000, 300);
 		userTitle.setFont(new Font("Times New Roman", Font.PLAIN, 50));
-		userTitle.setText("Welcome Back!");
+		userTitle.setText("Hi User: " + userId);
 		contentView.add(userTitle); // Add the name of the user to the 
 		
 		TITLE.setBounds(100, -200, 1000, 300);
