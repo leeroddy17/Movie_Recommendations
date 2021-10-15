@@ -117,14 +117,13 @@ public class query {
     }
 
     //Get a specific user ratings that are 4 or above
-    public ResultSet UserRatings4andAbove(String customerId) {
-        conn = new Connect(); 
+    public ResultSet UserRatings4andAbove(String customerId, Connect conn) {
         ResultSet result;
         try {
             Statement stmt = conn.dbConnection.createStatement();
 
             String sqlStatement = "SELECT titles.originaltitle FROM customer_ratings INNER JOIN titles ON titles.titleid = customer_ratings.titleid WHERE rating>3 AND customerid = " + customerId + ";";
-            System.out.println(sqlStatement);
+            // System.out.println(sqlStatement);
             result = stmt.executeQuery(sqlStatement);
         }
         catch (Exception e){
@@ -132,7 +131,6 @@ public class query {
             return null;
         }
 
-        conn.Disconnect();
         return result;
     }
 
