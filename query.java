@@ -164,7 +164,7 @@ public class query {
             Statement stmt = conn.dbConnection.createStatement();
 
             String sqlStatement = "SELECT names.nconst,primaryName FROM names INNER JOIN principals ON" +
-                                    "principals.nconst=names.nconst WHERE principals.category='actor' LIMIT 10;";
+                                    "principals.nconst=names.nconst WHERE principals.category='actor';";
             
             // System.out.println(sqlStatement);
             result = stmt.executeQuery(sqlStatement);
