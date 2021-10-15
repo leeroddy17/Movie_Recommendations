@@ -5,6 +5,7 @@ class Graph<T> {
     // We use Hashmap to store the edges in the graph
     public Map<T, List<T> > map = new HashMap<>();
     public Map<T, Map<T,Integer>> weighted_map = new HashMap<>();
+    public Map<T, Map<T,Double>> decimal_weighted_map = new HashMap<>();
   
     // This function adds a new vertex to the graph
     public void addVertex(T s)
@@ -68,6 +69,26 @@ class Graph<T> {
         } else {
 
             weighted_map.get(source).put(destination, weight);
+
+        }
+
+    }
+
+    public void addWeightedEdge(T source,
+        T destination,
+        Double weight,
+        boolean bidirectional)
+    {
+
+        if (!decimal_weighted_map.containsKey(source))
+        {
+            Map<T, Double> edge = new HashMap<>();
+            edge.put(destination, weight);
+
+            decimal_weighted_map.put(source, edge);
+        } else {
+
+            decimal_weighted_map.get(source).put(destination, weight);
 
         }
 

@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.sql.*;
 
+
+
 public class HollywoodPairs {
    private query sqlQuery;
    private Graph<String> graph;
@@ -37,7 +39,7 @@ public class HollywoodPairs {
             try {
 				while (costars.next()) {
                     allCostars.get(actor).add(costars.getString(1));
-					graph.addWeightedEdge(actor, costars.getString(1), 0, true);
+					graph.addWeightedEdge(actor, costars.getString(1), 0.0, true);
 				}
 			} catch (Exception err) {
 				System.out.println(err);
@@ -45,21 +47,43 @@ public class HollywoodPairs {
 
         }
 
-        for(String vertex : graph.weighted_map.keySet()) { //For each actor get list of movies they're in
-            for(String value : graph.weighted_map.get(vertex).keySet()) { //For each costar get list of movie they're in
-                //Check to see if weight of the edge is 0, if not then the weight is already computed
-                //RetainAll list1.RetainAll(list2)
-                //Where list1 is the list of movies the actor is in
-                //and list2 is the list of movies the costar is in
-                //Result being the common movies between them
-                //From those common movies query the average rating of them and save into an ArrayList
-                //Compute the average of that array list.
-                //Then set the weight of the edge between the actor and costar equal to that average
+        for(String actor : graph.decimal_weighted_map.keySet()) { //For each actor get list of movies they're in
+            for(String costar : graph.decimal_weighted_map.get(actor).keySet()) { //For each costar get list of movie they're in
+                if(graph.decimal_weighted_map.get(actor).get(costar) < 1) {
+                    Double averageMovieRating = sqlQuery.GetTheAverageOfAllCommonMovies(actor, costar, conn);
+                    graph.addWeightedEdge(actor, costar, averageMovieRating, true);
+                }
+
             }
  
         }
 
    }
 
+   public ArrayList<String> GetTop10Pairs() {
+        ArrayList<String> topPairs = new ArrayList<>(); //Returned as actor,costar for each instance
+        for(int i = 0; i < 10; i++) {
+            Double max = 0.0;
+            String maxActor = null;
+            String maxCostar = null;
+            for(String actor : graph.weighted_map.keySet()) {
+                for(String costar : graph.decimal_weighted_map.get(actor).keySet()) {
+                    if(graph.decimal_weighted_map.get(actor).get(costar) > max) {
+                        max = graph.decimal_weighted_map.get(actor).get(costar);
+                        maxActor = actor;
+                        maxCostar = costar;
+                    } 
+                
+                }
+            }
+            maxActor = sqlQuery.GetActorName(maxActor, conn);
+            maxCostar = sqlQuery.GetActorName(maxCostar, conn);
+            String pair = maxActor + "," + maxCostar;
+            topPairs.add(pair);
+            graph.decimal_weighted_map.get(maxActor).remove(maxCostar);
+        }
+
+        return topPairs;
+   }
 
 }

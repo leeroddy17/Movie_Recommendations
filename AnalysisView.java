@@ -191,6 +191,7 @@ public class AnalysisView
         ////////////////////////////////////////////////////////////////////////////
 		/////////ABOVE IS ANALYST VIEWER //////////////////////////////////////////
         freshTomatoNumber tomatoObj = new freshTomatoNumber();
+		HollywoodPairs hollywoodPairsObj = new HollywoodPairs();
 
 		System.out.println(tomatoObj.freshTomatoNumber("Justice League","Rambo: First Blood Part II"));
 	}

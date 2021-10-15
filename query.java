@@ -195,6 +195,49 @@ public class query {
 
         return result;
     }
+    
+    public Double GetTheAverageOfAllCommonMovies(String actor, String costar, Connect conn) {
+        ResultSet result;
+        Double average;
+        try {
+            Statement stmt = conn.dbConnection.createStatement();
+
+            String sqlStatement = "SELECT AVG(averageRating) FROM (SELECT averageRating FROM titles WHERE" + 
+                                    "titleId IN (SELECT titleId FROM principals WHERE nconst='" + costar + "' "+
+                                    "AND titleId IN(SELECT titleId FROM principals WHERE nconst='" + actor + "'))) " +
+                                    "AS averageRating;";
+            
+            // System.out.println(sqlStatement);
+            result = stmt.executeQuery(sqlStatement);
+            average = Double.parseDouble(result.getString(1));
+        }
+        catch (Exception e){
+            System.out.println("Error accessing Database.");
+            return null;
+        }
+
+        return average;
+    }
+
+    public String GetActorName(String actorid, Connect conn) {
+        ResultSet result;
+        String name;
+        try {
+            Statement stmt = conn.dbConnection.createStatement();
+
+            String sqlStatement = "SELECT primaryName FROM names WHERE nconst='" + actorid + "';";
+
+            // System.out.println(sqlStatement);
+            result = stmt.executeQuery(sqlStatement);
+            name = result.getString(1);
+        }
+        catch (Exception e){
+            System.out.println("Error accessing Database.");
+            return null;
+        }
+
+        return name;
+    }
     public void CloseConnection() {
         conn.Disconnect();
     }
