@@ -31,7 +31,7 @@ class Graph<T> {
         }
     }
 
-    public static void addWeightedEdge(T source,
+    public void addWeightedEdge(T source,
         T destination,
         boolean bidirectional)
     {
@@ -133,7 +133,7 @@ class Graph<T> {
         return (builder.toString());
     }
 
-    public static void printWeightedMap () {
+    public void printWeightedMap () {
         for (T v : weighted_map.keySet()) {
             System.out.print(v.toString() + ": ");
             for (T w : weighted_map.get(v).keySet())
@@ -145,16 +145,4 @@ class Graph<T> {
         }
     }
 
-    public static void main(String[] args) {
-        
-		addWeightedEdge(1, 5, true);
-		addWeightedEdge(2, 5, true);
-		addWeightedEdge(1, 5, true);
-		// test.addWeightedEdge(3, 6, true);
-		// test.addWeightedEdge(4, 7, true);
-		// test.addWeightedEdge(1, 5, true);
-		// test.addWeightedEdge(1, 5, true);
-		// test.addWeightedEdge(1, 5, true);
-		printWeightedMap();
-    }
 }
