@@ -158,6 +158,41 @@ public class query {
         return result;
     }
 
+    public ResultSet GetAllActors(Connect conn) {
+        ResultSet result;
+        try {
+            Statement stmt = conn.dbConnection.createStatement();
+
+            String sqlStatement = "SELECT nconst FROM principals WHERE category='actor';";
+            // System.out.println(sqlStatement);
+            result = stmt.executeQuery(sqlStatement);
+        }
+        catch (Exception e){
+            System.out.println("Error accessing Database.");
+            return null;
+        }
+
+        return result;
+    }
+
+    public ResultSet GetCostars(String actor, Connect conn) {
+        ResultSet result;
+        try {
+            Statement stmt = conn.dbConnection.createStatement();
+
+            String sqlStatement = "SELECT nconst FROM principals WHERE titleId IN(SELECT titleid FROM principals" + 
+            "WHERE nconst='" + actor + "');";
+            
+            // System.out.println(sqlStatement);
+            result = stmt.executeQuery(sqlStatement);
+        }
+        catch (Exception e){
+            System.out.println("Error accessing Database.");
+            return null;
+        }
+
+        return result;
+    }
     public void CloseConnection() {
         conn.Disconnect();
     }
