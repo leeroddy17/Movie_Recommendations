@@ -51,16 +51,28 @@ class Graph<T> {
             }
         }
 
-        // if (!map.containsKey(destination)) {
-        //     addVertex(destination);
-        // }
-        
-
-        // map.get(source).add(destination);
-        // if (bidirectional == true) {
-        // map.get(destination).add(source);
-        // }
     }
+
+    public void addWeightedEdge(T source,
+        T destination,
+        Integer weight,
+        boolean bidirectional)
+    {
+
+        if (!weighted_map.containsKey(source))
+        {
+            Map<T, Integer> edge = new HashMap<>();
+            edge.put(destination, weight);
+
+            weighted_map.put(source, edge);
+        } else {
+
+            weighted_map.get(source).put(destination, weight);
+
+        }
+
+    }
+
   
     // This function gives the count of vertices
     public void getVertexCount()

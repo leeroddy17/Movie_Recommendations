@@ -163,7 +163,9 @@ public class query {
         try {
             Statement stmt = conn.dbConnection.createStatement();
 
-            String sqlStatement = "SELECT nconst FROM principals WHERE category='actor';";
+            String sqlStatement = "SELECT names.nconst,primaryName FROM names INNER JOIN principals ON" +
+                                    "principals.nconst=names.nconst WHERE principals.category='actor' LIMIT 10;";
+            
             // System.out.println(sqlStatement);
             result = stmt.executeQuery(sqlStatement);
         }
@@ -181,7 +183,7 @@ public class query {
             Statement stmt = conn.dbConnection.createStatement();
 
             String sqlStatement = "SELECT nconst FROM principals WHERE titleId IN(SELECT titleid FROM principals" + 
-            "WHERE nconst='" + actor + "');";
+            "WHERE nconst='" + actor + "') AND nconst != '" + actor + "';";
             
             // System.out.println(sqlStatement);
             result = stmt.executeQuery(sqlStatement);
