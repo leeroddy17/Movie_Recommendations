@@ -163,8 +163,7 @@ public class query {
         try {
             Statement stmt = conn.dbConnection.createStatement();
 
-            String sqlStatement = "SELECT names.nconst,primaryName FROM names INNER JOIN principals ON" +
-                                    "principals.nconst=names.nconst WHERE principals.category='actor';";
+            String sqlStatement = "SELECT nconst FROM principals WHERE category='actor';";
             
             // System.out.println(sqlStatement);
             result = stmt.executeQuery(sqlStatement);
@@ -182,14 +181,15 @@ public class query {
         try {
             Statement stmt = conn.dbConnection.createStatement();
 
-            String sqlStatement = "SELECT nconst FROM principals WHERE titleId IN(SELECT titleid FROM principals" + 
-            "WHERE nconst='" + actor + "') AND nconst != '" + actor + "';";
+            String sqlStatement = "SELECT nconst FROM principals WHERE titleId IN(" +
+                                    "SELECT titleId FROM principals WHERE nconst='" + actor + 
+                                    "') AND nconst !='" + actor + "' AND category='actor';";
             
             // System.out.println(sqlStatement);
             result = stmt.executeQuery(sqlStatement);
         }
         catch (Exception e){
-            System.out.println("Error accessing Database.");
+            System.out.println("Error accessing Database. CoStars");
             return null;
         }
 

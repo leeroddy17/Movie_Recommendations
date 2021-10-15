@@ -18,27 +18,32 @@ public class HollywoodPairs {
        sqlQuery = new query();
        graph = new Graph<String>();
        conn = new Connect();
-
+        
        ArrayList<String> allActors = new ArrayList<>();
-       Map<String, ArrayList<String>> allCostars = new HashMap<>();
-
+       //Map<String, ArrayList<String>> allCostars = new HashMap<>();
+       Integer count = 0;
+        System.out.println("Entered cosntructor");
        //Use RetainAll
        ResultSet actors = sqlQuery.GetAllActors(conn); 
+       System.out.println(count++);
 		try {
 			while (actors.next()) {
 				allActors.add(actors.getString(1));
 			}
 		} catch (Exception err) {
+            System.out.println("Error getting the actors");
 			System.out.println(err);
 		}
+        System.out.println(allActors.size());
 
-        
+        System.out.println("Got all actors");
+        System.out.println("Building graph...");
         for(String actor : allActors) {
             ResultSet costars = sqlQuery.GetCostars(actor, conn);
-            allCostars.put(actor, new ArrayList<>());
+            //allCostars.put(actor, new ArrayList<>());
             try {
 				while (costars.next()) {
-                    allCostars.get(actor).add(costars.getString(1));
+                    //allCostars.get(actor).add(costars.getString(1));
 					graph.addWeightedEdge(actor, costars.getString(1), 0.0, true);
 				}
 			} catch (Exception err) {
@@ -46,6 +51,8 @@ public class HollywoodPairs {
 			}
 
         }
+        System.out.println("Graph built");
+        System.out.println("Establishing edge weight");
 
         for(String actor : graph.decimal_weighted_map.keySet()) { //For each actor get list of movies they're in
             for(String costar : graph.decimal_weighted_map.get(actor).keySet()) { //For each costar get list of movie they're in
@@ -57,6 +64,7 @@ public class HollywoodPairs {
             }
  
         }
+        System.out.println("Graph Complete.");
 
    }
 
@@ -84,6 +92,11 @@ public class HollywoodPairs {
         }
 
         return topPairs;
+   }
+
+   public static void main(String args[]) {
+       HollywoodPairs pair = new HollywoodPairs();
+       
    }
 
 }
