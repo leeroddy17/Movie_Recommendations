@@ -17,7 +17,7 @@ public class HollywoodPairs {
        graph = new Graph<String>();
        conn = new Connect();
 
-       ArrayList<String> allActors = new ArrayList();
+       ArrayList<String> allActors = new ArrayList<>();
        Map<String, ArrayList<String>> allCostars = new HashMap<>();
 
        //Use RetainAll
@@ -33,7 +33,7 @@ public class HollywoodPairs {
         
         for(String actor : allActors) {
             ResultSet costars = sqlQuery.GetCostars(actor, conn);
-            allCostars.put(actor, new ArrayList());
+            allCostars.put(actor, new ArrayList<>());
             try {
 				while (costars.next()) {
                     allCostars.get(actor).add(costars.getString(1));
@@ -47,6 +47,7 @@ public class HollywoodPairs {
 
         for(String vertex : graph.weighted_map.keySet()) { //For each actor get list of movies they're in
             for(String value : graph.weighted_map.get(vertex).keySet()) { //For each costar get list of movie they're in
+                //Check to see if weight of the edge is 0, if not then the weight is already computed
                 //RetainAll list1.RetainAll(list2)
                 //Where list1 is the list of movies the actor is in
                 //and list2 is the list of movies the costar is in
