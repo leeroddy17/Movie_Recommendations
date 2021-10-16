@@ -9,21 +9,7 @@ public class indirectDirector {
         graph = new Graph<String>();
         
     }
-    // public static void main(String[] args) {
-    //     query sqlqQuery = new query();
-    //     graph = new Graph<String>();
-    //     Map<String, ArrayList<String> > map = sqlqQuery.dataForIndirectDirector("Fred Astaire");
-    //     // System.out.println(map.toString());
-    //     for (String director : map.keySet()) {
-    //         for (String coActor : map.get(director)) {
-    //             graph.addWeightedEdge(director, coActor, true);
-    //         }
-    //     }
-        
-    //     graph.printWeightedMap();
-    //     System.out.println("Director: " + indirectDirector());
-    // }
-
+    
     public String indirectDirector(String actor) {
         // ArrayList<Integer> sumArray = new ArrayList<>();
         Map<String, ArrayList<String> > map = sqlQuery.dataForIndirectDirector(actor);

@@ -65,12 +65,10 @@ public class freshTomatoNumber {
         // System.out.println(pred);
 		if(connected){
 			String v = dest;
-            System.out.println(v);
 
 			while(v != null) {
 				path.add(v);
 				v = pred.get(v);
-                System.out.println(v);
 
 			}
 		}
