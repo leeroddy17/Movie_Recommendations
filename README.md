@@ -7,5 +7,7 @@ Compilation:
 javac *.java
 
 Then run the following:
-java -cp “.;postgresql-42.2.8.jar” LandingPage
+java -cp “.;postgresql-42.2.8.jar” landingPage
 
+Sample userid:
+1488844
