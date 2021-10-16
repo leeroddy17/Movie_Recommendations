@@ -4,7 +4,7 @@ class Graph<T> {
   
     // We use Hashmap to store the edges in the graph
     public Map<T, List<T> > map = new HashMap<>();
-    public Map<T, Map<T,Integer>> weighted_map = new HashMap<>();
+    public Map<T, Map<T,Integer> > weighted_map = new HashMap<>();
   
     // This function adds a new vertex to the graph
     public void addVertex(T s)
@@ -138,8 +138,7 @@ class Graph<T> {
             System.out.print(v.toString() + ": ");
             for (T w : weighted_map.get(v).keySet())
             {
-                System.out.print(w);
-                System.out.print( weighted_map.get(v).get(w));
+                System.out.print("(" + w + ", " +  weighted_map.get(v).get(w) + ") ");
             }
             System.out.println();
         }

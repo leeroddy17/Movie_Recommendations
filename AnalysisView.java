@@ -191,8 +191,12 @@ public class AnalysisView
         ////////////////////////////////////////////////////////////////////////////
 		/////////ABOVE IS ANALYST VIEWER //////////////////////////////////////////
         freshTomatoNumber tomatoObj = new freshTomatoNumber();
+		indirectDirector directorObj = new indirectDirector();
 
 		System.out.println(tomatoObj.freshTomatoNumber("Justice League","Rambo: First Blood Part II"));
+		System.out.println(directorObj.indirectDirector("Fred Astaire"));
+		System.out.println("DONEEE");
+
 	}
 
 	
