@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 import java.sql.*;
+import java.awt.event.*;
+
+
 
 public class contentView 
 {
@@ -81,16 +84,26 @@ public class contentView
 		int n = 50; // default value that should change
 		JButton[] History = new JButton[n];
         scroll.setSize(600, 300);
-        scroll.setLayout(new GridLayout(n, 10, 10, 0));
+        //scroll.setLayout(new GridLayout(n, 10, 10, 0));
+        
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx=1;
+        gbc.weighty=1;
+        gbc.ipady=30;
+        gbc.ipadx=50;
+        scroll.setLayout(new GridBagLayout());
+        
+        //scroll.setLayout(new BoxLayout(scroll, BoxLayout.X_AXIS));
 
         for (int i=0; i<n; i++)
         {
             History[i] = new JButton("");
-            scroll.add(History[i]);
+            scroll.add(History[i], gbc);
         } 
         
         scrollpane = new JScrollPane(scroll);
-        scrollpane.setBounds(100,180,1000,250);
+        //scrollpane.setBounds(100,180,1000,250);
         contentView.add(scrollpane);
         //////////////////////////////////////////////////////////////////
 		//Buttons for the user to click on the Featured movies
@@ -115,14 +128,28 @@ public class contentView
         int numRecs = 10;
         JButton[] recommendations = new JButton[numRecs];
         scrollRec.setSize(600, 400);
-        scrollRec.setLayout(new GridLayout(numRecs, 10, 10, 0));
-        for (int i=0; i<numRecs; i++){
+        //scrollRec.setLayout(new GridLayout(numRecs, 10, 10, 0));
+        //scrollRec.setLayout(new BoxLayout(scrollRec, BoxLayout.X_AXIS)); //////////////// changed
+        
+        GridBagConstraints gbc2 = new GridBagConstraints();
+        gbc2.fill = GridBagConstraints.BOTH;
+        gbc2.weightx=1;
+        gbc2.weighty=1;
+        gbc2.ipady=30;
+        gbc2.ipadx=50;
+        scrollRec.setLayout(new GridBagLayout());
+        
+        
+        
+        for (int i=0; i<numRecs; i++)
+        {
             recommendations[i] = new JButton("");
-            scrollRec.add(recommendations[i]);
+            scrollRec.add(recommendations[i], gbc2);
         }
 
         recommendationPane = new JScrollPane(scrollRec);
         recommendationPane.setBounds(100,515,1000,250);
+        
         contentView.add(recommendationPane);
         //////////////////////////////////////////////////////////////////
         //Buttons for the user to click on the Featured movies
@@ -148,10 +175,21 @@ public class contentView
         int numNotSamples = 10;
         JButton[] notRecs = new JButton[numNotSamples];
         scrollNotToWatch.setSize(600, 400);
-        scrollNotToWatch.setLayout(new GridLayout(numNotSamples, 10, 10, 0));
-        for (int i=0; i<numNotSamples; i++){
+        //scrollNotToWatch.setLayout(new GridLayout(numNotSamples, 10, 10, 0));
+        //scrollNotToWatch.setLayout(new BoxLayout(scrollNotToWatch, BoxLayout.X_AXIS));
+        
+        GridBagConstraints gbc3 = new GridBagConstraints();
+        gbc3.fill = GridBagConstraints.BOTH;
+        gbc3.weightx=1;
+        gbc3.weighty=1;
+        gbc3.ipady=30;
+        gbc3.ipadx=50;
+        scrollNotToWatch.setLayout(new GridBagLayout());
+        
+        for (int i=0; i<numNotSamples; i++)
+        {
             notRecs[i] = new JButton("");
-            scrollNotToWatch.add(notRecs[i]);
+            scrollNotToWatch.add(notRecs[i], gbc3);
         }
 
         notToWatchPane = new JScrollPane(scrollNotToWatch);
@@ -164,7 +202,6 @@ public class contentView
 
         //////////////////////////////////////////////////////////////////
         //listeners section
-        //Adds the listener for the WatchHistory
         calculate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Integer uid = Integer.parseInt(userId);
@@ -183,39 +220,6 @@ public class contentView
             }
          });
 
-        //Adds the Listener for recommendation
-        calcRec.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Integer uid = Integer.parseInt(userId);
-                ResultSet recs = sqlQuery.TopRecommendations(uid); 
-                try {
-                    int i=0;
-                    while (recs.next()) {
-                        recommendations[i].setText(recs.getString(1));
-                        i++;
-                    }
-                } catch (Exception err) {
-                    System.out.println(err);
-                }
-            }
-        });
-
-        //Adds the listener for not to Watch
-        calcNotRec.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                Integer uid = Integer.parseInt(userId);
-                ResultSet recs = sqlQuery.TopRecommendations(uid); 
-                try {
-                    int i=0;
-                    while (recs.next()) {
-                        notRecs[i].setText(recs.getString(1));
-                        i++;
-                    }
-                } catch (Exception err) {
-                    System.out.println(err);
-                }
-            }
-        });
         //Old way had a list of ten movies, now we are using the list again
         // JButton[] RecMovies = new JButton[10];
         
