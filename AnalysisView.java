@@ -1,192 +1,197 @@
-import javax.swing.*;    
+// Java Program to illustrate the GroupLayout class
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+
 import java.awt.event.*;
-import java.awt.*;
-import java.sql.*;
 
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javafx.geometry.Insets;
+import static javax.swing.GroupLayout.Alignment.*;
 
-public class AnalysisView
-{
-	// private query sqlQuery;
-    // private Integer customerId;
-    // private String endDate;
-    // private String startDate;
-    // private String genre;
-	public static void main(String[] args) // maybe pass the strings of the movies as arguments here
+// creating a class GroupLayoutExample
+public class AnalysisView {
+	
+	// Main Method
+	public static void main(String[] args)
 	{
 
-		query sqlQuery = new query();
-		///////////////////////
-		//Analysis Queries
-		///////////////////////
+       
+        JFrame frame = new JFrame("Analysis View");
+        
+        JPanel analysisView = new JPanel();
+        analysisView.setLayout(new BoxLayout(analysisView, BoxLayout.Y_AXIS));
 
-
-		JFrame analysistView = new JFrame();
-		JLabel userTitle = new JLabel(); // a panel for a title
-		JLabel TITLE = new JLabel(); // main title that should never be touched ever again
-		
-		JCheckBox horror = new JCheckBox("Horror");
-		JCheckBox thriller = new JCheckBox("Thriller");
-		JCheckBox action = new JCheckBox("Action");
-		JCheckBox adventure = new JCheckBox("Adventure");
-		JCheckBox romance = new JCheckBox("Romance");
-		JCheckBox comedy = new JCheckBox("Comedy");
-		JCheckBox sciFi = new JCheckBox("Sci-Fi");
-		JCheckBox documentary = new JCheckBox("Documentary");
-		JCheckBox mystery = new JCheckBox("Mystery");
-		
-		
-		// JLabel boxTitle = new JLabel("Filter By Genre:");
-		// boxTitle.setBounds(100, 125, 100, 100);
-		// analysistView.add(boxTitle);
-		
-		// Box CheckBoxes = Box.createVerticalBox();
-		// CheckBoxes.setBounds(100, 200, 100, 300);
-		// CheckBoxes.add(horror);
-		// CheckBoxes.add(thriller);
-		// CheckBoxes.add(action);
-		// CheckBoxes.add(adventure);
-		// CheckBoxes.add(romance);
-		// CheckBoxes.add(comedy);
-		// CheckBoxes.add(sciFi);
-		// CheckBoxes.add(documentary);
-		// CheckBoxes.add(mystery);
-		// analysistView.add(CheckBoxes);
-		
-		
-
-		// JCheckBox studio1 = new JCheckBox("Warner Bros");
-		// JCheckBox studio2 = new JCheckBox("Universal");
-		// JCheckBox studio3 = new JCheckBox("Marvel");
-		// JCheckBox studio4 = new JCheckBox("DreamWorks");
-		// JCheckBox studio5 = new JCheckBox("Sony");
-		// JCheckBox studio6 = new JCheckBox("Paramount");
-		// JLabel studioTitle = new JLabel("Filter By Studio:");
-		// studioTitle.setBounds(500, 125, 100, 100);
-		// analysistView.add(studioTitle);
-		
-		JLabel genre = new JLabel("Enter Genre:");
-		genre.setBounds(100, 125, 100, 30);
-		analysistView.add(genre);
-
-		JTextField genreValue = new JTextField(30);
-		genreValue.setBounds(225, 125, 100, 30);
-		analysistView.add(genreValue);
-
-
-		JButton titlesByGenre = new JButton("submit");
-        titlesByGenre.setBounds(100, 150, 100, 30);
-        analysistView.add(titlesByGenre);
-        titlesByGenre.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String input = genreValue.getText();
-				ResultSet result = sqlQuery.MoviesByGenre(input); 
-                try {
-                    String displayTitlesByGenre = "";
-					int counter = 0;
-                    while (result.next() && counter < 30) {
-                        displayTitlesByGenre += result.getString(1) + "\n";
-						counter++;
-                    }
-                    JOptionPane.showMessageDialog(null, displayTitlesByGenre);
-                } catch (Exception err) {
-                    System.out.println(err);
-                }
-            }
-        });
-		
-		 JLabel dateRangeLabel = new JLabel();
-		 dateRangeLabel.setText("Top Ten From (mm-dd-yyyy): ");
-		 dateRangeLabel.setBounds(470, 130, 300, 30);
-		 analysistView.add(dateRangeLabel);
-		 
-		 JTextField fromDate = new JTextField(10);
-		 fromDate.setBounds(670, 130, 100, 30);
-		 analysistView.add(fromDate);
- 
-		 JLabel dateRangeLabel2 = new JLabel();
-		 dateRangeLabel2.setText("To (mm-dd-yyyy): ");
-		 dateRangeLabel2.setBounds(470, 170, 300, 30);
-		 analysistView.add(dateRangeLabel2);
- 
-		 JTextField toDate = new JTextField(10);
-		 toDate.setBounds(670, 170, 100, 30);
-		 analysistView.add(toDate);
- 
-		JButton calculate = new JButton("Submit");
-        calculate.setBounds(470, 210, 100, 30);
-        analysistView.add(calculate);
-        calculate.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String startDate = fromDate.getText();
-                String endDate = toDate.getText();
-                ResultSet result2 = sqlQuery.TopRatedMovies(startDate, endDate); 
-                try {
-                    String displayTopRatedMovies = "";
-                    while (result2.next()) {
-                        displayTopRatedMovies += result2.getString(1) + "\n";
-                    }
-                    JOptionPane.showMessageDialog(null, displayTopRatedMovies);
-                } catch (Exception err) {
-                    System.out.println(err);
-                }
-            }
-		});
-
-		// Box studioBoxes = Box.createVerticalBox();
-		// studioBoxes.setBounds(500, 200, 100, 300);
-		// studioBoxes.add(studio1);
-		// studioBoxes.add(studio2);
-		// studioBoxes.add(studio3);
-		// studioBoxes.add(studio4);
-		// studioBoxes.add(studio5);
-		// studioBoxes.add(studio6);
-		
-		// analysistView.add(studioBoxes);
-		
-		
-		
-		
-		
-		String UserName = "Carlos"; // get the users name and put it here later
-		
-		
-		userTitle.setBounds(100,-100, 1000, 300);
-		userTitle.setFont(new Font("Times New Roman", Font.PLAIN, 50));
-		userTitle.setText("Welcome Back " + UserName + "!");
-		analysistView.add(userTitle); // Add the name of the user to the 
-		
-		TITLE.setBounds(100, -200, 1000, 300);
-		TITLE.setFont(new Font("Times New Roman", Font.PLAIN, 50));
-		TITLE.setText("Aggie Movies For Researchers");
-		
-		
-		
-		String movie1 = "avengers"; // name of the 3 most popular or relevant movies
-		String movie2 = "inception";
-		String movie3 = "Fast & Furious 6";
-		  
-		// Buttons for the user to click on the Featured movies
-        JButton button1 = new JButton(movie1); //"place holder should be changed to movie name
-        JButton button2 = new JButton(movie2);
-        JButton button3 = new JButton(movie3);
-  
-        // x axis, y axis, width, height
-        button1.setBounds(100, 500, 300, 200);
-        button2.setBounds(500, 500, 300, 200);
-        button3.setBounds(900, 500, 300, 200);
-  
-        analysistView.add(button1); // buttons added to the frame
-        analysistView.add(button2);
-        analysistView.add(button3);
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // main panel that will hold all panels
+        
+        JPanel panel2 = new JPanel();
+        panel2.setLayout(new BoxLayout(panel2, BoxLayout.X_AXIS));
+        panel2.setAlignmentX(Component.LEFT_ALIGNMENT);
+        String user = "User";
+        JLabel pageTitle = new JLabel("Welcome " + user);
+        
+        panel2.add(Box.createRigidArea(new Dimension(20,0))); // adds padding
+        panel2.add(pageTitle);
         
        
         
-          
-        analysistView.setSize(10000, 10000); // initial size of the frame can still be changed by the user
-        analysistView.setLayout(null);
-        analysistView.setVisible(true);
-        ////////////////////////////////////////////////////////////////////////////
-		/////////ABOVE IS ANALYST VIEWER //////////////////////////////////////////
         
+        JPanel panel3 = new JPanel();
+        panel3.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panel3.setLayout(new BoxLayout(panel3, BoxLayout.X_AXIS));
+        JLabel date1 = new JLabel("Top ten movies from:");
+        JTextField fromDate = new JTextField(10);
+        fromDate.setBounds(310, 130, 200, 30);
+        fromDate.setMaximumSize(fromDate.getPreferredSize());
+        JLabel date2 = new JLabel("To:");
+        JTextField toDate = new JTextField(10);
+        toDate.setBounds(310, 130, 200, 30);
+        toDate.setMaximumSize(fromDate.getPreferredSize());
+        JButton calculate = new JButton("calculate");
+       
+        
+        
+        panel3.add(Box.createRigidArea(new Dimension(20,0)));
+        panel3.add(date1);
+        panel3.add(fromDate);
+        panel3.add(Box.createRigidArea(new Dimension(5,0)));
+        panel3.add(date2);
+        panel3.add(toDate);
+        panel3.add(Box.createRigidArea(new Dimension(5,0)));
+        panel3.add(calculate);
+        
+        JPanel scrollTop10 = new JPanel(); // cult classics
+        scrollTop10.setAlignmentX(Component.LEFT_ALIGNMENT);
+        scrollTop10.setLayout(new BoxLayout(scrollTop10, BoxLayout.X_AXIS));
+        
+        JScrollPane topTen = new JScrollPane();        
+		JPanel scroll = new JPanel();
+		int n = 50; // default value that should change
+		JButton[] History = new JButton[n];
+		
+		
+       // scroll.setLayout(new GridLayout(n, 10, 0, 0));
+        scroll.setLayout(new BoxLayout(scroll, BoxLayout.X_AXIS));
+
+        for (int i=0; i<n; i++)
+        {
+            History[i] = new JButton("MOVIE");
+            scroll.add(History[i]);
+        } 
+        
+        topTen = new JScrollPane(scroll);
+        topTen.setMaximumSize(new Dimension(1400,200));
+        
+        scrollTop10.add(Box.createRigidArea(new Dimension(50,0)));
+        scrollTop10.add(topTen);
+        
+        JPanel panel4 = new JPanel();
+        panel4.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panel4.setLayout(new BoxLayout(panel4, BoxLayout.X_AXIS));
+        JLabel tomatoTitle = new JLabel("Fresh tomato number (pop up)");
+        JButton tomato = new JButton("calculate");
+        panel4.add(Box.createRigidArea(new Dimension(20,0)));
+        panel4.add(tomatoTitle);
+        panel4.add(tomato);
+        
+        
+        JPanel panel5 = new JPanel(); // cult classics
+        panel5.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panel5.setLayout(new BoxLayout(panel5, BoxLayout.X_AXIS));
+        JLabel cultClassics = new JLabel("Top 20 Cult Classics");
+        JButton cult = new JButton("calculate");
+        panel5.add(Box.createRigidArea(new Dimension(20,0)));
+        panel5.add(cultClassics);
+        panel5.add(cult);
+        
+        JScrollPane top20 = new JScrollPane();        
+		JPanel top20scroll = new JPanel();
+		int max = 20; // default value that should change
+		JButton[] list = new JButton[max];
+        top20scroll.setSize(600, 400);
+        //top20scroll.setLayout(new GridLayout(max, 10, 10, 0));
+
+        JPanel scrollTop20 = new JPanel(); // cult classics
+        scrollTop20.setAlignmentX(Component.LEFT_ALIGNMENT);
+        scrollTop20.setLayout(new BoxLayout(scrollTop20, BoxLayout.X_AXIS));
+        
+        for (int i=0; i<max; i++)
+        {
+            list[i] = new JButton("MOVIE");
+            top20scroll.add(list[i]);
+        } 
+        
+        top20 = new JScrollPane(top20scroll);
+        top20.setMaximumSize(new Dimension(400,500));
+        
+        scrollTop20.add(Box.createRigidArea(new Dimension(20,0)));
+        scrollTop20.add(top20);
+        
+        
+        JPanel panel6 = new JPanel();
+        panel6.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panel6.setLayout(new BoxLayout(panel6, BoxLayout.X_AXIS));
+        JLabel indirectDir = new JLabel("Indrect Director");
+        JButton dir = new JButton("calculate");
+        
+        panel6.add(Box.createRigidArea(new Dimension(20,0)));
+        panel6.add(indirectDir);
+        panel6.add(dir);
+        
+        JPanel panel7 = new JPanel();
+
+
+       
+        
+        panel7.setLayout(new BoxLayout(panel7, BoxLayout.X_AXIS));
+        panel7.setAlignmentX(Component.LEFT_ALIGNMENT);
+        JTextField act = new JTextField(10);
+        act.setBounds(310, 130, 200, 30);
+        act.setMaximumSize(act.getPreferredSize());
+        JLabel actor = new JLabel("actor");
+        String DIRECTOR = "";
+        JLabel indirect = new JLabel("Indirect Director: " + DIRECTOR);
+        
+        //panel7.add(Box.createRigidArea(new Dimension(20,0)));
+        panel7.add(actor);
+        panel7.add(act);
+        panel7.add(indirect);
+        
+        
+        
+        
+        
+        
+        
+        panel.add(panel2);
+        panel.add(panel3);
+        panel.add(scrollTop10); // first scollable
+        panel.add(panel4);
+        panel.add(panel5);
+        panel.add(scrollTop20);  // second scrollable
+        panel.add(panel6);
+        panel.add(panel7);
+        
+   
+        
+        
+        
+        
+        
+        analysisView.add(Box.createVerticalStrut(50)); // strut for visibility
+        Container contentPane = frame.getContentPane();
+        contentPane.add(analysisView, BorderLayout.CENTER);
+        
+
+        frame.add(panel);
+        frame.pack();
+        frame.setVisible(true);
+		
+		
+		
 	}
 }
