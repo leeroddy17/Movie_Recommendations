@@ -379,29 +379,31 @@ public class query {
     }
 
     public Boolean DoesTheUserExist(String customerid) {
+        conn = new Connect();
         ResultSet result;
         Boolean userExists;
         try {
+
             Statement stmt = conn.dbConnection.createStatement();
 
-            String sqlStatement = "SELECT customerId FROM customer_ratings WHERE customerId=" + customerid + ";";
-            // System.out.println(sqlStatement);
+            String sqlStatement = "SELECT customerId FROM customer_ratings WHERE customerId='" + customerid + "';";
+
             result = stmt.executeQuery(sqlStatement);
 
             if(result.next()) {
-                userExists = true;
+                 userExists = true;
             }
             else {
-                userExists = false;
+                 userExists = false;
             }
-
         }
         catch (Exception e){
             System.out.println("Error accessing Database.");
+            System.out.println(e);
             return null;
         }
+        conn.Disconnect();
         return userExists;
-
     }
 }
 

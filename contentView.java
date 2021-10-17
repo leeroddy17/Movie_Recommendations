@@ -175,8 +175,6 @@ public class contentView
         int numNotSamples = 10;
         JButton[] notRecs = new JButton[numNotSamples];
         scrollNotToWatch.setSize(600, 400);
-        //scrollNotToWatch.setLayout(new GridLayout(numNotSamples, 10, 10, 0));
-        //scrollNotToWatch.setLayout(new BoxLayout(scrollNotToWatch, BoxLayout.X_AXIS));
         
         GridBagConstraints gbc3 = new GridBagConstraints();
         gbc3.fill = GridBagConstraints.BOTH;
@@ -219,28 +217,40 @@ public class contentView
                 }
             }
          });
+         //Adds the Listener for recommendation
+        calcRec.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Integer uid = Integer.parseInt(userId);
+                ResultSet recs = sqlQuery.TopRecommendations(uid); 
+                try {
+                    int i=0;
+                    while (recs.next()) {
+                        recommendations[i].setText(recs.getString(1));
+                        i++;
+                    }
+                } catch (Exception err) {
+                    System.out.println(err);
+                }
+            }
+        });
 
-        //Old way had a list of ten movies, now we are using the list again
-        // JButton[] RecMovies = new JButton[10];
-        
-        // for (int i=0; i<5; i++)
-        // {
-        //     RecMovies[i] = new JButton("");
-        //     RecMovies[i].setBounds(100 + 225*i, 515, 200, 60);
-        //     contentView.add(RecMovies[i]);
-        // } 
-        // for (int i=5; i<10; i++)
-        // {
-        //     RecMovies[i] = new JButton("");
-        //     RecMovies[i].setBounds(100 + 225*(i-5), 595, 200, 60);
-        //     contentView.add(RecMovies[i]);
-        // }
+        //Adds the listener for not to Watch
+        calcNotRec.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                Integer uid = Integer.parseInt(userId);
+                ResultSet recs = sqlQuery.TopRecommendations(uid); 
+                try {
+                    int i=0;
+                    while (recs.next()) {
+                        notRecs[i].setText(recs.getString(1));
+                        i++;
+                    }
+                } catch (Exception err) {
+                    System.out.println(err);
+                }
+            }
+        });
 
-        //Creating the GUI
-        // Container contentPane = contentView.getContentPane();
-        // contentPane.add(contentView, BorderLayout.CENTER);
-        //add(contentView, BorderLayout.CENTER);
-        //pack();
         Container contentPane = frame.getContentPane();
         contentPane.add(contentView, BorderLayout.CENTER);
         //contentPane.setVisible(true);

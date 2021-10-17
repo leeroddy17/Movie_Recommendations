@@ -18,6 +18,7 @@ public class landingPage {
         
         contentViewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            try{
                 String result = (String)JOptionPane.showInputDialog(
                     landingPage,
                     "Enter your user ID", 
@@ -33,6 +34,10 @@ public class landingPage {
                 else {
                     JOptionPane.showMessageDialog(null, "Invalid User ID");
                 }
+            }
+            catch(Exception err){
+                JOptionPane.showMessageDialog(null, "Invalid User ID");
+            }
               
             }
          });
