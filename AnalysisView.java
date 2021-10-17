@@ -33,8 +33,8 @@ public class AnalysisView {
     //private static String DIRECTOR;
 	public AnalysisView(){
         sqlQuery = new query();
-        tomatoGraph = new freshTomatoNumber();
-        hollywoodPairsGraph = new HollywoodPairs();
+        //tomatoGraph = new freshTomatoNumber();
+        //hollywoodPairsGraph = new HollywoodPairs();
         System.out.println("HERE");
         // DIRECTOR = "";
     }

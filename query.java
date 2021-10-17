@@ -384,7 +384,7 @@ public class query {
         try {
             Statement stmt = conn.dbConnection.createStatement();
 
-            String sqlStatement = "SELECT customerId FROM customer_ratings WHERE customerId='" + customerid + ":;";
+            String sqlStatement = "SELECT customerId FROM customer_ratings WHERE customerId=" + customerid + ";";
             // System.out.println(sqlStatement);
             result = stmt.executeQuery(sqlStatement);
 
