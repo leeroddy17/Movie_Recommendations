@@ -73,8 +73,8 @@ public class freshTomatoNumber {
 			}
 		}
 		else {
-			System.out.println(visited);
-			System.out.println(pred);
+			// System.out.println(visited);
+			// System.out.println(pred);
 			System.out.println("Given source and destination are not connected");
 		}
 		

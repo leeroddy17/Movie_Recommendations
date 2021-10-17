@@ -1,19 +1,4 @@
 // Java Program to illustrate the GroupLayout class
-// import java.awt.BorderLayout;
-// import java.awt.Component;
-// import java.awt.Container;
-// import java.awt.Dimension;
-// import java.awt.GridLayout;
-
-// import java.awt.event.*;
-// import java.awt.*;
-// import java.sql.*;
-// import javax.swing.*;
-// import javax.swing.border.EmptyBorder;
-// import java.util.Map;
-// import java.util.ArrayList;
-// //import javafx.geometry.Insets;
-// import static javax.swing.GroupLayout.Alignment.*;
 import javax.swing.*;    
 import java.awt.event.*;
 import java.awt.*;
@@ -33,9 +18,8 @@ public class AnalysisView {
     //private static String DIRECTOR;
 	public AnalysisView(){
         sqlQuery = new query();
-        //tomatoGraph = new freshTomatoNumber();
-        //hollywoodPairsGraph = new HollywoodPairs();
-        System.out.println("HERE");
+        tomatoGraph = new freshTomatoNumber();
+        hollywoodPairsGraph = new HollywoodPairs();
         // DIRECTOR = "";
     }
 	// Main Method
@@ -344,7 +328,7 @@ public class AnalysisView {
                 ArrayList<String> recs = hollywoodPairsGraph.GetTop10Pairs();
                 String display = "<HTML><U>Actor1, Actor2:</U></HTML>";
                 for (String pair : recs) {
-                    System.out.println(pair);
+                    //System.out.println(pair);
                     display+=pair+'\n';
                 } 
                 JOptionPane.showMessageDialog(null, display);

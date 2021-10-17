@@ -205,14 +205,15 @@ public class contentView
                 Integer uid = Integer.parseInt(userId);
                 String startDate = fromDate.getText();
                 String endDate = toDate.getText();
-                ResultSet watchHistory = sqlQuery.WatchHistory(uid, startDate, endDate); 
-                try {
+                try{
+                    ResultSet watchHistory = sqlQuery.WatchHistory(uid, startDate, endDate); 
                     int i=0;
                     while (watchHistory.next()) {
                         History[i].setText(watchHistory.getString(1));
                         i++;
                     }
                 } catch (Exception err) {
+                    JOptionPane.showMessageDialog(null, "Invalid Input");
                     System.out.println(err);
                 }
             }
@@ -221,14 +222,15 @@ public class contentView
         calcRec.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Integer uid = Integer.parseInt(userId);
-                ResultSet recs = sqlQuery.TopRecommendations(uid); 
-                try {
+                try{
+                    ResultSet recs = sqlQuery.TopRecommendations(uid); 
                     int i=0;
                     while (recs.next()) {
                         recommendations[i].setText(recs.getString(1));
                         i++;
                     }
                 } catch (Exception err) {
+                    JOptionPane.showMessageDialog(null, "Unexpected error");
                     System.out.println(err);
                 }
             }
@@ -238,14 +240,16 @@ public class contentView
         calcNotRec.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 Integer uid = Integer.parseInt(userId);
-                ResultSet recs = sqlQuery.TopRecommendations(uid); 
-                try {
+                try{
+                    ResultSet recs = sqlQuery.UserBeware(uid); 
                     int i=0;
                     while (recs.next()) {
+                        System.out.println(recs.getString(1));
                         notRecs[i].setText(recs.getString(1));
                         i++;
                     }
                 } catch (Exception err) {
+                    JOptionPane.showMessageDialog(null, "Unexpected error");
                     System.out.println(err);
                 }
             }
