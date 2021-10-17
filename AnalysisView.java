@@ -226,8 +226,12 @@ public class AnalysisView {
         frame.pack();
         frame.setVisible(true);
 		
-		
-		
+		//Did not know where to put this, this is the hollywood pairs query.
+        // // System.out.println(tomatoObj.freshTomatoNumber("Justice League","Rambo: First Blood Part II"));
+        // sqlQuery = new query();
+                
+        // Graph<String> hollywoodPairsGraph = sqlQuery.graphForHollyWoodPairs();
+        // hollywoodPairsGraph.printDecimalWeightedMap();		
 	}
 
 	

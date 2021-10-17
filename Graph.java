@@ -4,7 +4,8 @@ class Graph<T> {
   
     // We use Hashmap to store the edges in the graph
     public Map<T, List<T> > map = new HashMap<>();
-    public Map<T, Map<T,Integer> > weighted_map = new HashMap<>();
+    public Map<T, Map<T,Integer>> weighted_map = new HashMap<>();
+    public Map<T, Map<T,Double>> decimal_weighted_map = new HashMap<>();
   
     // This function adds a new vertex to the graph
     public void addVertex(T s)
@@ -51,16 +52,62 @@ class Graph<T> {
             }
         }
 
-        // if (!map.containsKey(destination)) {
-        //     addVertex(destination);
-        // }
-        
-
-        // map.get(source).add(destination);
-        // if (bidirectional == true) {
-        // map.get(destination).add(source);
-        // }
     }
+
+    public void addWeightedEdge(T source,
+        T destination,
+        int weight,
+        boolean bidirectional)
+    {
+
+        if (!weighted_map.containsKey(source))
+        {
+            Map<T, Integer> edge = new HashMap<>();
+            edge.put(destination, weight);
+
+            weighted_map.put(source, edge);
+        } else {
+
+            weighted_map.get(source).put(destination, weight);
+
+        }
+
+    }
+
+    public void addWeightedEdge(T source,
+        T destination,
+        Double weight,
+        boolean bidirectional)
+    {
+
+        if (!decimal_weighted_map.containsKey(source))
+        {
+            Map<T, Double> edge = new HashMap<>();
+            edge.put(destination, weight);
+
+            decimal_weighted_map.put(source, edge);
+        } else {
+
+            decimal_weighted_map.get(source).put(destination, weight);
+
+        }
+
+        if(bidirectional) {
+            if (!decimal_weighted_map.containsKey(destination))
+            {
+                Map<T, Double> edge = new HashMap<>();
+                edge.put(source, weight);
+
+                decimal_weighted_map.put(destination, edge);
+            } else {
+
+                decimal_weighted_map.get(destination).put(source, weight);
+
+            }
+        }
+
+    }
+
   
     // This function gives the count of vertices
     public void getVertexCount()
@@ -139,6 +186,17 @@ class Graph<T> {
             for (T w : weighted_map.get(v).keySet())
             {
                 System.out.print("(" + w + ", " +  weighted_map.get(v).get(w) + ") ");
+            }
+            System.out.println();
+        }
+    }
+
+    public void printDecimalWeightedMap () {
+        for (T v : decimal_weighted_map.keySet()) {
+            System.out.print(v.toString() + ": ");
+            for (T w : decimal_weighted_map.get(v).keySet())
+            {
+                System.out.print("(" + w + ", " +  decimal_weighted_map.get(v).get(w) + ") ");
             }
             System.out.println();
         }

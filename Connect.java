@@ -13,11 +13,11 @@ public class Connect {
         try {
             Class.forName("org.postgresql.Driver");
             dbConnection = DriverManager.getConnection(url, username, password);
-            //JOptionPane.showMessageDialog(null,"Opened database successfully");
+            // JOptionPane.showMessageDialog(null,"Opened database successfully");
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.out.println(e.getClass().getName()+": "+e.getMessage());
             //JOptionPane.showMessageDialog(null,e.getClass().getName()+": "+e.getMessage());
             System.exit(0);
         }//end try catch
