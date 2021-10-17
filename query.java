@@ -377,5 +377,31 @@ public class query {
         conn.Disconnect();
         return graph;
     }
+
+    public Boolean DoesTheUserExist(String customerid) {
+        ResultSet result;
+        Boolean userExists;
+        try {
+            Statement stmt = conn.dbConnection.createStatement();
+
+            String sqlStatement = "SELECT customerId FROM customer_ratings WHERE customerId='" + customerid + ":;";
+            // System.out.println(sqlStatement);
+            result = stmt.executeQuery(sqlStatement);
+
+            if(result.next()) {
+                userExists = true;
+            }
+            else {
+                userExists = false;
+            }
+
+        }
+        catch (Exception e){
+            System.out.println("Error accessing Database.");
+            return null;
+        }
+        return userExists;
+
+    }
 }
 
