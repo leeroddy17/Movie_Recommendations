@@ -33,6 +33,7 @@ public class AnalysisView {
 
        //Toplevel
         JFrame frame = new JFrame("Analysis View");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         query sqlQuery = new query();
 
         JPanel analysisView = new JPanel();
@@ -79,7 +80,7 @@ public class AnalysisView {
         
         JScrollPane topTen = new JScrollPane();        
 		JPanel scroll = new JPanel();
-		int n = 50; // default value that should change
+		int n = 10; // default value that should change
 		JButton[] History = new JButton[n];
 		
 		

@@ -85,11 +85,8 @@ public class query {
         try {
             Statement stmt = conn.dbConnection.createStatement();
 
-            String sqlStatement = "SELECT originaltitle,COUNT(originaltitle)" +
-                                    "FROM titles INNER JOIN customer_ratings ON" +
-                                    "customer_ratings.titleid=titles.titleid" +
-                                    "WHERE customer_ratings.rating>3 GROUP BY originaltitle" +
-                                    "ORDER BY COUNT(originaltitle) DESC LIMIT 30;";
+            String sqlStatement = "SELECT originaltitle,COUNT(originaltitle)  FROM titles INNER JOIN customer_ratings ON "+
+            "customer_ratings.titleid=titles.titleid WHERE customer_ratings.rating>3 GROUP BY originaltitle ORDER BY COUNT(originaltitle) DESC LIMIT 20;";
             result = stmt.executeQuery(sqlStatement);     
         }
         catch (Exception e){
