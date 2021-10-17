@@ -135,7 +135,6 @@ public class query {
         return result;
     }
 
-
     public ResultSet TopRecommendations(int customerid) {
         conn = new Connect();
         ResultSet result;
@@ -240,7 +239,7 @@ public class query {
         return name;
     }
 
-    public Graph graphForHollyWoodPairs() {
+    public Graph<String> graphForHollyWoodPairs() {
         Graph<String> graph = new Graph<>();
         conn = new Connect();
         ResultSet result;
@@ -287,6 +286,7 @@ public class query {
         }
         catch (Exception e){
             System.out.println("Error accessing Database.");
+            System.out.println(e);
             return null;
         }
         conn.Disconnect();
