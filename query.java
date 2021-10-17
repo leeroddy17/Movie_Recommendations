@@ -66,7 +66,7 @@ public class query {
             String sqlStatement = "SELECT originaltitle FROM titles INNER JOIN customer_ratings" +
                                     " ON customer_ratings.titleid = titles.titleid WHERE '"+
                                     endDate + "'>customer_ratings.date AND '" + startDate + 
-                                    "'<customer_ratings.date GROUP BY titles.titleid ORDER BY numvotes DESC LIMIT 10;";
+                                    "'<customer_ratings.date GROUP BY titles.titleid ORDER BY COUNT(numvotes) DESC LIMIT 10;";
             System.out.println(sqlStatement);
             result = stmt.executeQuery(sqlStatement);
         }
