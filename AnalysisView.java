@@ -55,13 +55,15 @@ public class AnalysisView {
         JPanel panel2 = new JPanel();
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.X_AXIS));
         panel2.setAlignmentX(Component.LEFT_ALIGNMENT);
-        String user = "User";
+        String user = "User! ";
         JLabel pageTitle = new JLabel("Welcome " + user);
+        pageTitle.setFont(new Font("Times New Roman", Font.PLAIN, 35));
+        pageTitle.setBorder(BorderFactory.createLineBorder(Color.black));
         
         panel2.add(Box.createRigidArea(new Dimension(20,0))); // adds padding
         panel2.add(pageTitle);
         ////////////////////////////////////////////////////////////////
-       //Top Ten movies section
+        //Top Ten movies section
         JPanel panel3 = new JPanel();
         panel3.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.X_AXIS));
@@ -94,10 +96,7 @@ public class AnalysisView {
 		JButton[] History = new JButton[n];
 		
 		
-       // scroll.setLayout(new GridLayout(n, 10, 0, 0));
-        //scroll.setLayout(new BoxLayout(scroll, BoxLayout.X_AXIS));
         GridBagConstraints gbc = new GridBagConstraints();
-        //gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx=1;
         gbc.weighty=1;
@@ -172,10 +171,7 @@ public class AnalysisView {
 		int n2 = 20; // default value that should change
 		JButton[] list = new JButton[n2];
 		
-		
-       // scroll.setLayout(new GridLayout(n, 10, 0, 0));
         GridBagConstraints gbc2 = new GridBagConstraints();
-        //gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc2.fill = GridBagConstraints.BOTH;
         gbc2.weightx=1;
         gbc2.weighty=1;
@@ -197,7 +193,7 @@ public class AnalysisView {
         
                 
         ////////////////////////////////////////////////////////////////
-       //Indirect Director
+        //Indirect Director
         JPanel panel6 = new JPanel();
         panel6.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel6.setLayout(new BoxLayout(panel6, BoxLayout.X_AXIS));
@@ -282,6 +278,7 @@ public class AnalysisView {
                         i++;
                     }
                 } catch (Exception err) {
+                    JOptionPane.showMessageDialog(null, "Invalid Input");
                     System.out.println(err);
                 }
             }
@@ -292,41 +289,36 @@ public class AnalysisView {
             public void actionPerformed(ActionEvent e) {
                 String titleA = t1.getText();
                 String titleB = t2.getText();
-                Stack<String> output = tomatoGraph.freshTomatoNumber(titleA, titleB);
-                String chainDisplay = "";
-                if (output.empty()){
-                    chainDisplay = "No connection was found";
+                try{
+                    Stack<String> output = tomatoGraph.freshTomatoNumber(titleA, titleB);
+                    String chainDisplay = "";
+                    if (output.empty()){
+                        chainDisplay = "No connection was found";
+                    }
+                    chainDisplay = output.pop();
+                    while (!output.empty()){
+                        chainDisplay =chainDisplay+"->"+output.pop();
+                    }
+                    JOptionPane.showMessageDialog(null, chainDisplay);
+                    }
+                catch (Exception err){
+                    JOptionPane.showMessageDialog(null, "Invalid Input");
                 }
-                chainDisplay = output.pop();
-                while (!output.empty()){
-                    chainDisplay =chainDisplay+"->"+output.pop();
-                    //chainDisplay=chainDisplay;
-                }
-                JOptionPane.showMessageDialog(null, chainDisplay);
-                // ResultSet recs = sqlQuery.TopRecommendations(uid); 
-                // try {
-                //     int i=0;
-                //     while (recs.next()) {
-                //         recommendations[i].setText(recs.getString(1));
-                //         i++;
-                //     }
-                // } catch (Exception err) {
-                //     System.out.println(err);
-                // }
             }
         });
 
         //Adds the listener for not to Watch
         cult.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                ResultSet recs = sqlQuery.CultClassics(); 
                 try {
+                    ResultSet recs = sqlQuery.CultClassics(); 
                     int i=0;
                     while (recs.next()) {
                         list[i].setText(recs.getString(1));
                         i++;
                     }
                 } catch (Exception err) {
+                    JOptionPane.showMessageDialog(null, "Something Happened with the cult classics graph");
                     System.out.println(err);
                 }
             }
@@ -334,18 +326,21 @@ public class AnalysisView {
 
         dir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                try{
                 String actor =act.getText();
                 indirectDirector directorList = new indirectDirector();
                 String DIRECTOR = directorList.indirectDirector(actor);
                 indirect.setText("Indirect Director: "+DIRECTOR);
-                // System.out.println(DIRECTOR);
-                // System.out.println("HERE");
-                //Map<String,ArrayList<String>> recs = sqlQuery.dataForIndirectDirector(actor); 
+                }
+                catch(Exception err){
+                    JOptionPane.showMessageDialog(null, "Invalid Input");
+                }
             }
         });
 
         HPCalc.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                try{
                 ArrayList<String> recs = hollywoodPairsGraph.GetTop10Pairs();
                 String display = "<HTML><U>Actor1, Actor2:</U></HTML>";
                 for (String pair : recs) {
@@ -353,12 +348,11 @@ public class AnalysisView {
                     display+=pair+'\n';
                 } 
                 JOptionPane.showMessageDialog(null, display);
+                }
+                catch (Exception err){
+                    JOptionPane.showMessageDialog(null, "Invalid Input");
+                }
             }
         });
-		//Did not know where to put this, this is the hollywood pairs query.
-        // // System.out.println(tomatoObj.freshTomatoNumber("Justice League","Rambo: First Blood Part II"));
-        // sqlQuery = new query();
-                
-        // hollywoodPairsGraph.printDecimalWeightedMap();		
 	}
 }

@@ -42,6 +42,7 @@ public class landingPage {
                 landingPage.dispose();
                 AnalysisView analysisViewPage = new AnalysisView(); 
                 analysisViewPage.main(null);
+                
             }
          });
 
