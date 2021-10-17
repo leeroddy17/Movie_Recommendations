@@ -15,50 +15,63 @@ public class contentView
 	{
         
         //Frame in which everything is held
-        JFrame frame = new JFrame();
+        JFrame frame = new JFrame("Content View");
         //Panel that organizes the objects
         JPanel contentView = new JPanel();
         contentView.setLayout(new BoxLayout(contentView, BoxLayout.PAGE_AXIS));
-        contentView.createHorizontalGlue();
         //Setting ip the queries
         query sqlQuery = new query();
         JLabel userTitle = new JLabel(); // a panel for a title
-		JLabel TITLE = new JLabel(); // main title that should never be touched ever again
 		
 		userTitle.setBounds(100,-100, 1000, 300);
 		userTitle.setFont(new Font("Times New Roman", Font.PLAIN, 35));
-		userTitle.setText("Hi User: " + userId);
+		userTitle.setText("Hello User: " + userId+"! ");
+        userTitle.setBorder(BorderFactory.createLineBorder(Color.black));
 		contentView.add(userTitle); // Add the name of the user to the 
-		
-        TITLE.setBounds(100, -200, 1000, 300);
-        TITLE.setFont(new Font("Times New Roman", Font.PLAIN, 35));
-        TITLE.setText("Aggie Movies For Researchers");
         //////////////////////////////////////////////////////////////////
         
         //Creating the Date Labels and ranges for the watch history command
-        JButton calculate = new JButton("Calculate Watch History");
+        JPanel CalcWatchHistory = new JPanel();
+        CalcWatchHistory.setAlignmentX(Component.LEFT_ALIGNMENT);
+        CalcWatchHistory.setLayout(new BoxLayout(CalcWatchHistory, BoxLayout.LINE_AXIS));
+        
+        JLabel WatchHistoryTitle = new JLabel(); // a panel for a title
+
+		WatchHistoryTitle.setFont(new Font("Times New Roman", Font.PLAIN, 25));
+		WatchHistoryTitle.setText("Watch History");
+        CalcWatchHistory.add(WatchHistoryTitle);
+
+        CalcWatchHistory.add(Box.createHorizontalStrut(10));
+
+        JButton calculate = new JButton("Calculate");
         calculate.setBounds(100, 130, 100, 30);
-        contentView.add(calculate);
+        CalcWatchHistory.add(calculate);
+        contentView.add(CalcWatchHistory);
+
+        JPanel HistoryOptions1 = new JPanel();
+        HistoryOptions1.setAlignmentX(Component.LEFT_ALIGNMENT);
+        HistoryOptions1.setLayout(new BoxLayout(HistoryOptions1, BoxLayout.LINE_AXIS));
 
         JLabel dateRangeLabel = new JLabel();
-        dateRangeLabel.setText("Watch History From (mm-dd-yyyy): ");
+        dateRangeLabel.setText("From (mm-dd-yyyy): ");
         dateRangeLabel.setBounds(100, 130, 300, 30);
-        contentView.add(dateRangeLabel);
+        HistoryOptions1.add(dateRangeLabel);
         
         JTextField fromDate = new JTextField(10);
         fromDate.setBounds(310, 130, 200, 30);
         fromDate.setMaximumSize(fromDate.getPreferredSize());
-        contentView.add(fromDate);
+        HistoryOptions1.add(fromDate);
 
         JLabel dateRangeLabel2 = new JLabel();
         dateRangeLabel2.setText("To (mm-dd-yyyy): ");
         dateRangeLabel2.setBounds(470, 130, 300, 30);
-        contentView.add(dateRangeLabel2);
+        HistoryOptions1.add(dateRangeLabel2);
 
         JTextField toDate = new JTextField(10);
         toDate.setBounds(575, 130, 200, 30);
         toDate.setMaximumSize(toDate.getPreferredSize());
-        contentView.add(toDate);
+        HistoryOptions1.add(toDate);
+        contentView.add(HistoryOptions1);
         ///////////////////////////////////////////////////////////////////
 
         //Setting up the scroll for the watch history
@@ -67,7 +80,7 @@ public class contentView
 		JPanel scroll = new JPanel();
 		int n = 50; // default value that should change
 		JButton[] History = new JButton[n];
-        scroll.setSize(600, 400);
+        scroll.setSize(600, 300);
         scroll.setLayout(new GridLayout(n, 10, 10, 0));
 
         for (int i=0; i<n; i++)
@@ -81,10 +94,21 @@ public class contentView
         contentView.add(scrollpane);
         //////////////////////////////////////////////////////////////////
 		//Buttons for the user to click on the Featured movies
+        JPanel recommendedPanel = new JPanel();
+        recommendedPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        recommendedPanel.setLayout(new BoxLayout(recommendedPanel, BoxLayout.LINE_AXIS));
 		JLabel recomended = new JLabel("Recomended for you");
 		recomended.setBounds(100, 380, 1000, 200);
-		recomended.setFont(new Font("Times New Roman", Font.PLAIN, 35));
-		contentView.add(recomended);
+		recomended.setFont(new Font("Times New Roman", Font.PLAIN, 25));
+		recommendedPanel.add(recomended);
+
+        recommendedPanel.add(Box.createHorizontalStrut(10));
+
+        JButton calcRec = new JButton("Calculate");
+        calcRec.setBounds(100, 130, 100, 30);
+        recommendedPanel.add(calcRec);
+        contentView.add(recommendedPanel);
+
         //Creating the Recommendations Scrollbar
         JScrollPane recommendationPane;
         JPanel scrollRec = new JPanel();
@@ -102,11 +126,22 @@ public class contentView
         contentView.add(recommendationPane);
         //////////////////////////////////////////////////////////////////
         //Buttons for the user to click on the Featured movies
+        JPanel notPanel = new JPanel();
+        notPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        notPanel.setLayout(new BoxLayout(notPanel, BoxLayout.LINE_AXIS));
+
 		JLabel notRecommended = new JLabel("What NOT To Watch");
 		notRecommended.setBounds(100, 715, 1000, 200);
-		notRecommended.setFont(new Font("Times New Roman", Font.PLAIN, 35));
-		contentView.add(notRecommended);
+		notRecommended.setFont(new Font("Times New Roman", Font.PLAIN, 25));
+		notPanel.add(notRecommended);
         
+        notPanel.add(Box.createHorizontalStrut(10));
+
+        JButton calcNotRec = new JButton("Calculate");
+        calcNotRec.setBounds(100, 130, 100, 30);
+        notPanel.add(calcNotRec);
+        contentView.add(notPanel);
+
         //Creating the what not to watch scrollbar
         JScrollPane notToWatchPane;
         JPanel scrollNotToWatch = new JPanel();
@@ -122,6 +157,11 @@ public class contentView
         notToWatchPane = new JScrollPane(scrollNotToWatch);
         notToWatchPane.setBounds(100,850,1000,250);
         contentView.add(notToWatchPane);
+
+        //////////////////////////////////////////////////////////////////
+        //Adding a strut at the bottom to increase visibility
+        contentView.add(Box.createVerticalStrut(50));
+
         //////////////////////////////////////////////////////////////////
         //listeners section
         calculate.addActionListener(new ActionListener() {
