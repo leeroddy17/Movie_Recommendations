@@ -145,7 +145,11 @@ public class query {
         return result;
     }
 
+<<<<<<< HEAD
     public Map<String, ArrayList<String> > dataForIndirectDirector(String actor) {
+=======
+    public ResultSet TopRecommendations(int customerid) {
+>>>>>>> origin/HollywoodPairs
         conn = new Connect();
         Map<String,ArrayList<String>> actorsDirectors = new HashMap<>();
         try {
@@ -322,7 +326,7 @@ public class query {
         return name;
     }
 
-    public Graph graphForHollyWoodPairs() {
+    public Graph<String> graphForHollyWoodPairs() {
         Graph<String> graph = new Graph<>();
         conn = new Connect();
         ResultSet result;
@@ -369,6 +373,7 @@ public class query {
         }
         catch (Exception e){
             System.out.println("Error accessing Database.");
+            System.out.println(e);
             return null;
         }
         conn.Disconnect();
