@@ -98,19 +98,17 @@ public class AnalysisView {
         //scroll.setLayout(new BoxLayout(scroll, BoxLayout.X_AXIS));
         GridBagConstraints gbc = new GridBagConstraints();
         //gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.fill = GridBagConstraints.VERTICAL;
-        gbc.gridx=0;
-        gbc.gridy=0;
-        gbc.ipady = 40;
-        gbc.ipadx=20;
-        gbc.gridheight = 0;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx=1;
+        gbc.weighty=1;
+        gbc.ipady=30;
+        gbc.ipadx=50;
         scroll.setLayout(new GridBagLayout());
 
         for (int i=0; i<n; i++)
         {
             History[i] = new JButton("");
             scroll.add(History[i], gbc);
-            gbc.gridx+=1;
         } 
         
         topTen = new JScrollPane(scroll);
@@ -176,12 +174,19 @@ public class AnalysisView {
 		
 		
        // scroll.setLayout(new GridLayout(n, 10, 0, 0));
-        scroll2.setLayout(new BoxLayout(scroll2, BoxLayout.X_AXIS));
+        GridBagConstraints gbc2 = new GridBagConstraints();
+        //gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc2.fill = GridBagConstraints.BOTH;
+        gbc2.weightx=1;
+        gbc2.weighty=1;
+        gbc2.ipady=10;
+        gbc2.ipadx=30;
+        scroll2.setLayout(new GridBagLayout());
 
         for (int i=0; i<n2; i++)
         {
-            list[i] = new JButton("MOVIE");
-            scroll2.add(list[i]);
+            list[i] = new JButton("");
+            scroll2.add(list[i], gbc2);
         } 
         
         top20 = new JScrollPane(scroll2);
@@ -231,12 +236,6 @@ public class AnalysisView {
         panel8.add(HPLabel);
         panel8.add(Box.createRigidArea(new Dimension(5,0)));
         panel8.add(HPCalc);
-
-        // JPanel panel9 = new JPanel();
-        // panel9.setAlignmentX(Component.LEFT_ALIGNMENT);
-        // panel9.setLayout(new BoxLayout(panel9, BoxLayout.X_AXIS));
-        // JLabel HPLabel = new JLabel("Hollywood Pairs");
-        // JButton HPCalc = new JButton("Calculate");
 
         //Spacing and display 
         panel.add(panel2);
