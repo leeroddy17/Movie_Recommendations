@@ -86,7 +86,7 @@ public class AnalysisView {
         topTen = new JScrollPane(scroll);
         topTen.setMaximumSize(new Dimension(1400,200));
         
-        scrollTop10.add(Box.createRigidArea(new Dimension(50,0)));
+        scrollTop10.add(Box.createRigidArea(new Dimension(20,0)));
         scrollTop10.add(topTen);
         
         JPanel panel4 = new JPanel();
@@ -96,8 +96,30 @@ public class AnalysisView {
         JButton tomato = new JButton("calculate");
         panel4.add(Box.createRigidArea(new Dimension(20,0)));
         panel4.add(tomatoTitle);
+        panel4.add(Box.createRigidArea(new Dimension(5,0)));
         panel4.add(tomato);
         
+        
+        JPanel tomatoTitles = new JPanel();
+        tomatoTitles.setAlignmentX(Component.LEFT_ALIGNMENT);
+        tomatoTitles.setLayout(new BoxLayout(tomatoTitles, BoxLayout.X_AXIS));
+        JLabel title1 = new JLabel("Title 1:");
+        JLabel title2 = new JLabel("Title 2:");
+        JTextField t1 = new JTextField(20);
+        t1.setBounds(310, 130, 200, 30);
+        t1.setMaximumSize(t1.getPreferredSize());
+        JTextField t2 = new JTextField(20);
+        t2.setBounds(310, 130, 200, 30);
+        t2.setMaximumSize(t2.getPreferredSize());
+        
+        tomatoTitles.add(Box.createRigidArea(new Dimension(20,0)));
+        tomatoTitles.add(title1);
+        tomatoTitles.add(Box.createRigidArea(new Dimension(5,0)));
+        tomatoTitles.add(t1);
+        tomatoTitles.add(Box.createRigidArea(new Dimension(20,0)));
+        tomatoTitles.add(title2);
+        tomatoTitles.add(Box.createRigidArea(new Dimension(5,0)));
+        tomatoTitles.add(t2);
         
         JPanel panel5 = new JPanel(); // cult classics
         panel5.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -106,27 +128,30 @@ public class AnalysisView {
         JButton cult = new JButton("calculate");
         panel5.add(Box.createRigidArea(new Dimension(20,0)));
         panel5.add(cultClassics);
+        panel5.add(Box.createRigidArea(new Dimension(5,0)));
         panel5.add(cult);
         
-        JScrollPane top20 = new JScrollPane();        
-		JPanel top20scroll = new JPanel();
-		int max = 20; // default value that should change
-		JButton[] list = new JButton[max];
-        top20scroll.setSize(600, 400);
-        //top20scroll.setLayout(new GridLayout(max, 10, 10, 0));
-
         JPanel scrollTop20 = new JPanel(); // cult classics
         scrollTop20.setAlignmentX(Component.LEFT_ALIGNMENT);
         scrollTop20.setLayout(new BoxLayout(scrollTop20, BoxLayout.X_AXIS));
         
-        for (int i=0; i<max; i++)
+        JScrollPane top20 = new JScrollPane();        
+		JPanel scroll2 = new JPanel();
+		int n2 = 50; // default value that should change
+		JButton[] list = new JButton[n];
+		
+		
+       // scroll.setLayout(new GridLayout(n, 10, 0, 0));
+        scroll2.setLayout(new BoxLayout(scroll2, BoxLayout.X_AXIS));
+
+        for (int i=0; i<n2; i++)
         {
             list[i] = new JButton("MOVIE");
-            top20scroll.add(list[i]);
+            scroll2.add(list[i]);
         } 
         
-        top20 = new JScrollPane(top20scroll);
-        top20.setMaximumSize(new Dimension(400,500));
+        top20 = new JScrollPane(scroll2);
+        top20.setMaximumSize(new Dimension(1400,200));
         
         scrollTop20.add(Box.createRigidArea(new Dimension(20,0)));
         scrollTop20.add(top20);
@@ -135,11 +160,12 @@ public class AnalysisView {
         JPanel panel6 = new JPanel();
         panel6.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel6.setLayout(new BoxLayout(panel6, BoxLayout.X_AXIS));
-        JLabel indirectDir = new JLabel("Indrect Director");
+        JLabel indirectDir = new JLabel("Indrect Director: ");
         JButton dir = new JButton("calculate");
         
         panel6.add(Box.createRigidArea(new Dimension(20,0)));
         panel6.add(indirectDir);
+        panel4.add(Box.createRigidArea(new Dimension(5,0)));
         panel6.add(dir);
         
         JPanel panel7 = new JPanel();
@@ -152,13 +178,14 @@ public class AnalysisView {
         JTextField act = new JTextField(10);
         act.setBounds(310, 130, 200, 30);
         act.setMaximumSize(act.getPreferredSize());
-        JLabel actor = new JLabel("actor");
+        JLabel actor = new JLabel("actor:");
         String DIRECTOR = "";
         JLabel indirect = new JLabel("Indirect Director: " + DIRECTOR);
         
-        //panel7.add(Box.createRigidArea(new Dimension(20,0)));
+        panel7.add(Box.createRigidArea(new Dimension(20,0)));
         panel7.add(actor);
         panel7.add(act);
+        panel7.add(Box.createRigidArea(new Dimension(20,0)));
         panel7.add(indirect);
         
         
@@ -169,11 +196,19 @@ public class AnalysisView {
         
         panel.add(panel2);
         panel.add(panel3);
+        panel.add(Box.createRigidArea(new Dimension(0,20)));
         panel.add(scrollTop10); // first scollable
+        panel.add(Box.createRigidArea(new Dimension(20,20)));
         panel.add(panel4);
+        panel.add(Box.createRigidArea(new Dimension(20,20)));
+        panel.add(tomatoTitles);
+        panel.add(Box.createRigidArea(new Dimension(20,20)));
         panel.add(panel5);
+        panel.add(Box.createRigidArea(new Dimension(20,20)));
         panel.add(scrollTop20);  // second scrollable
+        panel.add(Box.createRigidArea(new Dimension(20,20)));
         panel.add(panel6);
+        panel.add(Box.createRigidArea(new Dimension(20,20)));
         panel.add(panel7);
         
    
