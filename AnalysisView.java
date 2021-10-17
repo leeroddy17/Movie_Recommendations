@@ -190,10 +190,14 @@ public class AnalysisView
         analysistView.setVisible(true);
         ////////////////////////////////////////////////////////////////////////////
 		/////////ABOVE IS ANALYST VIEWER //////////////////////////////////////////
-        freshTomatoNumber tomatoObj = new freshTomatoNumber();
-		HollywoodPairs hollywoodPairsObj = new HollywoodPairs();
+        // freshTomatoNumber tomatoObj = new freshTomatoNumber();
+		// HollywoodPairs hollywoodPairsObj = new HollywoodPairs();
 
-		System.out.println(tomatoObj.freshTomatoNumber("Justice League","Rambo: First Blood Part II"));
+		// System.out.println(tomatoObj.freshTomatoNumber("Justice League","Rambo: First Blood Part II"));
+		sqlQuery = new query();
+		
+		Graph<String> hollywoodPairsGraph = sqlQuery.graphForHollyWoodPairs();
+		hollywoodPairsGraph.printDecimalWeightedMap();
 	}
 
 	

@@ -1,6 +1,7 @@
 import java.sql.*;
 import javax.swing.JOptionPane;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 /*
 CSCE 315
 9-25-2019
@@ -238,8 +239,58 @@ public class query {
 
         return name;
     }
-    public void CloseConnection() {
+
+    public Graph graphForHollyWoodPairs() {
+        Graph<String> graph = new Graph<>();
+        conn = new Connect();
+        ResultSet result;
+        try {
+            Statement stmt = conn.dbConnection.createStatement();
+            String sqlStatement = "SELECT names.primaryname, principals.titleId, AVG(customer_ratings.rating) FROM principals " + 
+            "INNER JOIN names ON principals.nconst = names.nconst " +
+            "INNER JOIN customer_ratings ON principals.titleId = customer_ratings.titleId " +
+            " WHERE principals.titleId IN " +
+            "(SELECT titleid FROM principals WHERE nconst IN (" +
+            "SELECT nconst FROM principals WHERE category = 'actor' OR category = 'actress')) " +
+            "AND (category = 'actor' OR category = 'actress') "+
+            "GROUP BY principals.titleid, names.primaryname;";
+
+            result = stmt.executeQuery(sqlStatement);
+
+            try {
+                boolean check = true;
+                String title = "";
+                result.next();
+
+                while(check) {
+                    title = result.getString(2);
+                    ArrayList<String> actors = new ArrayList<>();
+                    Double weight = Double.valueOf(result.getString(3));
+
+                    while(title.equals(result.getString(2))) {
+                        actors.add(result.getString(1));
+                        if(!result.next()) {
+                            check = false;
+                        }
+                    }
+
+                    for (int i=0; i<actors.size()-1; i++) {
+                        for (int j = i+1; j < actors.size(); j++) {
+                            graph.addWeightedEdge(actors.get(i), actors.get(j), weight, true);
+                        }
+                    }
+                    actors.clear();
+                } 
+            }  catch (Exception err) {
+                System.out.println(err + " 6 ");
+            }      
+        }
+        catch (Exception e){
+            System.out.println("Error accessing Database.");
+            return null;
+        }
         conn.Disconnect();
+        return graph;
     }
 }
 

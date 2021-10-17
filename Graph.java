@@ -56,7 +56,7 @@ class Graph<T> {
 
     public void addWeightedEdge(T source,
         T destination,
-        Integer weight,
+        int weight,
         boolean bidirectional)
     {
 
@@ -90,6 +90,20 @@ class Graph<T> {
 
             decimal_weighted_map.get(source).put(destination, weight);
 
+        }
+
+        if(bidirectional) {
+            if (!decimal_weighted_map.containsKey(destination))
+            {
+                Map<T, Double> edge = new HashMap<>();
+                edge.put(source, weight);
+
+                decimal_weighted_map.put(destination, edge);
+            } else {
+
+                decimal_weighted_map.get(destination).put(source, weight);
+
+            }
         }
 
     }
@@ -173,6 +187,17 @@ class Graph<T> {
             {
                 System.out.print(w);
                 System.out.print( weighted_map.get(v).get(w));
+            }
+            System.out.println();
+        }
+    }
+
+    public void printDecimalWeightedMap () {
+        for (T v : decimal_weighted_map.keySet()) {
+            System.out.print(v.toString() + ": ");
+            for (T w : decimal_weighted_map.get(v).keySet())
+            {
+                System.out.print("(" + w + ", " +  decimal_weighted_map.get(v).get(w) + ") ");
             }
             System.out.println();
         }
