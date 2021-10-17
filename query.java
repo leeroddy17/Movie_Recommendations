@@ -209,7 +209,7 @@ public class query {
         conn.Disconnect();
         return actorsDirectors;
     }
-    
+
     public ResultSet GetAllActors(Connect conn) {
         ResultSet result;
         try {
@@ -269,6 +269,29 @@ public class query {
         }
 
         return average;
+    }
+    public ResultSet UserBeware(int customerid) {
+        conn = new Connect();
+        ResultSet result;
+        try {
+            Statement stmt = conn.dbConnection.createStatement();
+            // Returns top 20 recommendations based on finding high-rated, unwatched movies from similiar users
+            String sqlStatement = "SELECT DISTINCT originaltitle, averagerating FROM titles INNER JOIN customer_ratings" + 
+            " ON customer_ratings.titleid=titles.titleid WHERE customer_ratings.titleid IN " + 
+            "(SELECT DISTINCT titleid FROM customer_ratings WHERE titleid NOT IN " +
+            "(SELECT titleid FROM customer_ratings WHERE customerid = " + customerid + ") AND customerid IN "+
+            "(SELECT customerid FROM customer_ratings WHERE customerid!=" + customerid + " AND rating<=2 AND titleid IN "+
+            "(SELECT titleid FROM customer_ratings WHERE customerid=" + customerid + " AND rating<=2 ORDER BY rating ASC LIMIT 10)"+
+            " LIMIT 10) AND rating <= 2 LIMIT 20) ORDER BY averagerating ASC;";
+
+            result = stmt.executeQuery(sqlStatement);
+        }
+        catch(Exception e){
+            System.out.println("Error Accessing Database");
+            return null;
+        }
+        conn.Disconnect();
+        return result;
     }
 
     public String GetActorName(String actorid, Connect conn) {
