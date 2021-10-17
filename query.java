@@ -378,7 +378,7 @@ public class query {
         return graph;
     }
 
-    public Boolean DoesTheUserExist(int customerid) {
+    public Boolean DoesTheUserExist(String customerid) {
         ResultSet result;
         Boolean userExists;
         try {

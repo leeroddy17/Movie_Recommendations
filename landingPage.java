@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 public class landingPage {
     
     public static void main(String[] args) {
+        query sqlQuery = new query();
         JFrame landingPage = new JFrame(); // Make the frame
         landingPage.setSize(10000, 10000 );
         landingPage.setVisible(true);
@@ -24,10 +25,13 @@ public class landingPage {
                     JOptionPane.PLAIN_MESSAGE
                 );
 
-                if(result != null) {
+                if(sqlQuery.DoesTheUserExist(result)) {
                     landingPage.dispose();
                     contentView contentViewPage = new contentView(result); 
                     contentViewPage.main(null);
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Invalid User ID");
                 }
               
             }
