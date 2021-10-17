@@ -116,6 +116,12 @@ class Graph<T> {
                            + map.keySet().size()
                            + " vertex");
     }
+    public void getVertexCountDWM()
+    {
+        System.out.println("The graph has "
+                           + decimal_weighted_map.keySet().size()
+                           + " vertex");
+    }
   
     // This function gives the count of edges
     public void getEdgesCount(boolean bidirection)

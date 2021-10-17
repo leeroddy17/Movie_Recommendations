@@ -40,20 +40,14 @@ public class HollywoodPairs {
                 }
             }
             String pair = maxActor + "," + maxCostar;
-            System.out.println(pair);
             //graph.decimal_weighted_map.get(maxActor).remove(maxCostar);
-            graph.decimal_weighted_map.remove(maxActor);
+            graph.decimal_weighted_map.get(maxCostar).remove(maxActor);
+            graph.decimal_weighted_map.get(maxActor).remove(maxCostar);
+            topPairs.add(pair);
         }
 
         return topPairs;
    }
 
-//    public static void main(String args[]) {
-//        HollywoodPairs pair = new HollywoodPairs();
-//        ArrayList<String> pairs = new ArrayList<>();
-//        pairs = pair.GetTop10Pairs();
-
-       
-//    }
 
 }

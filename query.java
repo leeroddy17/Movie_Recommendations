@@ -255,33 +255,42 @@ public class query {
             "GROUP BY principals.titleid, names.primaryname;";
 
             result = stmt.executeQuery(sqlStatement);
+            boolean check = true;
 
             try {
-                boolean check = true;
+                
                 String title = "";
                 result.next();
 
                 while(check) {
-                    title = result.getString(2);
-                    ArrayList<String> actors = new ArrayList<>();
-                    Double weight = Double.valueOf(result.getString(3));
+                    if(result.next()) {
+                        title = result.getString(2);
+                        ArrayList<String> actors = new ArrayList<>();
+                        Double weight = Double.valueOf(result.getString(3));
+                
+                        while(title.equals(result.getString(2))) {
+                            if(!result.next()) {
+                                check = false;
+                                break;
+                            }
+                            actors.add(result.getString(1));
+                            
 
-                    while(title.equals(result.getString(2))) {
-                        actors.add(result.getString(1));
-                        if(!result.next()) {
-                            check = false;
-                        }
-                    }
 
-                    for (int i=0; i<actors.size()-1; i++) {
-                        for (int j = i+1; j < actors.size(); j++) {
-                            graph.addWeightedEdge(actors.get(i), actors.get(j), weight, true);
                         }
+                        
+                        for (int i=0; i<actors.size()-1; i++) {
+                            for (int j = i+1; j < actors.size(); j++) {
+                                graph.addWeightedEdge(actors.get(i), actors.get(j), weight, true);
+                            }
+                        }
+                        actors.clear();
                     }
-                    actors.clear();
                 } 
             }  catch (Exception err) {
+
                 System.out.println(err + " 6 ");
+                 
             }      
         }
         catch (Exception e){
