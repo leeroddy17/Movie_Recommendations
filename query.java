@@ -126,11 +126,16 @@ public class query {
         try {
             Statement stmt = conn.dbConnection.createStatement();
             // Returns top 20 recommendations based on finding high-rated, unwatched movies from similiar users
-            String sqlStatement = "SELECT titleid FROM customer_ratings WHERE titleid NOT IN" +
-             "(SELECT titleid FROM customer_ratings WHERE customerid = " + customerid + ") AND customerid IN" +
-              "(SELECT customerid FROM customer_ratings WHERE customerid!=" + customerid + " AND rating>4 AND" +
-               "titleid IN (SELECT titleid FROM customer_ratings WHERE customerid=" + customerid + " AND rating>4 LIMIT 10)" +
-                "LIMIT 10) AND rating >= 4 LIMIT 20;";
+            // String sqlStatement = "SELECT titleid FROM customer_ratings WHERE titleid NOT IN" +
+            //  "(SELECT titleid FROM customer_ratings WHERE customerid = " + customerid + ") AND customerid IN" +
+            //   "(SELECT customerid FROM customer_ratings WHERE customerid!=" + customerid + " AND rating>4 AND" +
+            //    "titleid IN (SELECT titleid FROM customer_ratings WHERE customerid=" + customerid + " AND rating>4 LIMIT 10)" +
+            //     "LIMIT 10) AND rating >= 4 LIMIT 20;";
+            String sqlStatement = "SELECT DISTINCT originaltitle, averagerating FROM titles INNER JOIN customer_ratings ON "+
+            "customer_ratings.titleid=titles.titleid WHERE customer_ratings.titleid IN (SELECT DISTINCT titleid FROM customer_ratings "+
+            "WHERE titleid NOT IN (SELECT titleid FROM customer_ratings WHERE customerid = "+customerid+") AND customerid IN (SELECT customerid "+
+            "FROM customer_ratings WHERE customerid!="+customerid+" AND rating>=4 AND titleid IN (SELECT titleid FROM customer_ratings WHERE customerid="+customerid+" "+
+            "AND rating>=4 ORDER BY rating DESC LIMIT 10) LIMIT 10) AND rating >= 4 LIMIT 10) ORDER BY averagerating DESC;";
 
             result = stmt.executeQuery(sqlStatement);
         }
@@ -276,13 +281,19 @@ public class query {
         try {
             Statement stmt = conn.dbConnection.createStatement();
             // Returns top 20 recommendations based on finding high-rated, unwatched movies from similiar users
-            String sqlStatement = "SELECT DISTINCT originaltitle, averagerating FROM titles INNER JOIN customer_ratings" + 
-            " ON customer_ratings.titleid=titles.titleid WHERE customer_ratings.titleid IN " + 
-            "(SELECT DISTINCT titleid FROM customer_ratings WHERE titleid NOT IN " +
-            "(SELECT titleid FROM customer_ratings WHERE customerid = " + customerid + ") AND customerid IN "+
-            "(SELECT customerid FROM customer_ratings WHERE customerid!=" + customerid + " AND rating<=2 AND titleid IN "+
-            "(SELECT titleid FROM customer_ratings WHERE customerid=" + customerid + " AND rating<=2 ORDER BY rating ASC LIMIT 10)"+
-            " LIMIT 10) AND rating <= 2 LIMIT 20) ORDER BY averagerating ASC;";
+            // String sqlStatement = "SELECT DISTINCT originaltitle, averagerating FROM titles INNER JOIN customer_ratings" + 
+            // " ON customer_ratings.titleid=titles.titleid WHERE customer_ratings.titleid IN " + 
+            // "(SELECT DISTINCT titleid FROM customer_ratings WHERE titleid NOT IN " +
+            // "(SELECT titleid FROM customer_ratings WHERE customerid = " + customerid + ") AND customerid IN "+
+            // "(SELECT customerid FROM customer_ratings WHERE customerid!=" + customerid + " AND rating<=2 AND titleid IN "+
+            // "(SELECT titleid FROM customer_ratings WHERE customerid=" + customerid + " AND rating<=2 ORDER BY rating ASC LIMIT 10)"+
+            // " LIMIT 10) AND rating <= 2 LIMIT 20) ORDER BY averagerating ASC;";
+            String sqlStatement = "SELECT DISTINCT originaltitle, averagerating FROM titles INNER JOIN customer_ratings ON "+
+            "customer_ratings.titleid=titles.titleid WHERE customer_ratings.titleid IN (SELECT DISTINCT titleid "+
+            "FROM customer_ratings WHERE titleid NOT IN (SELECT titleid FROM customer_ratings WHERE customerid = "+customerid+") "+
+            "AND customerid IN (SELECT customerid FROM customer_ratings WHERE customerid!="+customerid+" AND rating<=2 AND titleid IN "+
+            "(SELECT titleid FROM customer_ratings WHERE customerid="+customerid+" AND rating<=2 ORDER BY rating ASC LIMIT 10) LIMIT 10) "+
+            "AND rating <= 2 LIMIT 10) ORDER BY averagerating ASC;";
 
             result = stmt.executeQuery(sqlStatement);
         }

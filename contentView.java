@@ -164,6 +164,7 @@ public class contentView
 
         //////////////////////////////////////////////////////////////////
         //listeners section
+        //Adds the listener for the WatchHistory
         calculate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Integer uid = Integer.parseInt(userId);
@@ -182,6 +183,39 @@ public class contentView
             }
          });
 
+        //Adds the Listener for recommendation
+        calcRec.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Integer uid = Integer.parseInt(userId);
+                ResultSet recs = sqlQuery.TopRecommendations(uid); 
+                try {
+                    int i=0;
+                    while (recs.next()) {
+                        recommendations[i].setText(recs.getString(1));
+                        i++;
+                    }
+                } catch (Exception err) {
+                    System.out.println(err);
+                }
+            }
+        });
+
+        //Adds the listener for not to Watch
+        calcNotRec.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                Integer uid = Integer.parseInt(userId);
+                ResultSet recs = sqlQuery.TopRecommendations(uid); 
+                try {
+                    int i=0;
+                    while (recs.next()) {
+                        notRecs[i].setText(recs.getString(1));
+                        i++;
+                    }
+                } catch (Exception err) {
+                    System.out.println(err);
+                }
+            }
+        });
         //Old way had a list of ten movies, now we are using the list again
         // JButton[] RecMovies = new JButton[10];
         

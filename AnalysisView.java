@@ -1,17 +1,29 @@
 // Java Program to illustrate the GroupLayout class
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.GridLayout;
+// import java.awt.BorderLayout;
+// import java.awt.Component;
+// import java.awt.Container;
+// import java.awt.Dimension;
+// import java.awt.GridLayout;
 
+// import java.awt.event.*;
+// import java.awt.*;
+// import java.sql.*;
+// import javax.swing.*;
+// import javax.swing.border.EmptyBorder;
+// import java.util.Map;
+// import java.util.ArrayList;
+// //import javafx.geometry.Insets;
+// import static javax.swing.GroupLayout.Alignment.*;
+import javax.swing.*;    
 import java.awt.event.*;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javafx.geometry.Insets;
-import static javax.swing.GroupLayout.Alignment.*;
-
+import java.awt.*;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.List;
 // creating a class GroupLayoutExample
 public class AnalysisView {
 	
@@ -19,9 +31,10 @@ public class AnalysisView {
 	public static void main(String[] args)
 	{
 
-       
+       //Toplevel
         JFrame frame = new JFrame("Analysis View");
-        
+        query sqlQuery = new query();
+
         JPanel analysisView = new JPanel();
         analysisView.setLayout(new BoxLayout(analysisView, BoxLayout.Y_AXIS));
 
@@ -36,10 +49,8 @@ public class AnalysisView {
         
         panel2.add(Box.createRigidArea(new Dimension(20,0))); // adds padding
         panel2.add(pageTitle);
-        
-       
-        
-        
+        ////////////////////////////////////////////////////////////////
+       //Top Ten movies section
         JPanel panel3 = new JPanel();
         panel3.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.X_AXIS));
@@ -52,9 +63,7 @@ public class AnalysisView {
         toDate.setBounds(310, 130, 200, 30);
         toDate.setMaximumSize(fromDate.getPreferredSize());
         JButton calculate = new JButton("calculate");
-       
-        
-        
+        //Spacing
         panel3.add(Box.createRigidArea(new Dimension(20,0)));
         panel3.add(date1);
         panel3.add(fromDate);
@@ -63,7 +72,7 @@ public class AnalysisView {
         panel3.add(toDate);
         panel3.add(Box.createRigidArea(new Dimension(5,0)));
         panel3.add(calculate);
-        
+
         JPanel scrollTop10 = new JPanel(); // cult classics
         scrollTop10.setAlignmentX(Component.LEFT_ALIGNMENT);
         scrollTop10.setLayout(new BoxLayout(scrollTop10, BoxLayout.X_AXIS));
@@ -89,6 +98,8 @@ public class AnalysisView {
         scrollTop10.add(Box.createRigidArea(new Dimension(20,0)));
         scrollTop10.add(topTen);
         
+        ////////////////////////////////////////////////////////////////
+        //Fresh Tomato Number
         JPanel panel4 = new JPanel();
         panel4.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel4.setLayout(new BoxLayout(panel4, BoxLayout.X_AXIS));
@@ -121,6 +132,8 @@ public class AnalysisView {
         tomatoTitles.add(Box.createRigidArea(new Dimension(5,0)));
         tomatoTitles.add(t2);
         
+        ////////////////////////////////////////////////////////////////
+       //Cult Classics section
         JPanel panel5 = new JPanel(); // cult classics
         panel5.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel5.setLayout(new BoxLayout(panel5, BoxLayout.X_AXIS));
@@ -156,11 +169,13 @@ public class AnalysisView {
         scrollTop20.add(Box.createRigidArea(new Dimension(20,0)));
         scrollTop20.add(top20);
         
-        
+                
+        ////////////////////////////////////////////////////////////////
+       //Indirect Director
         JPanel panel6 = new JPanel();
         panel6.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel6.setLayout(new BoxLayout(panel6, BoxLayout.X_AXIS));
-        JLabel indirectDir = new JLabel("Indrect Director: ");
+        JLabel indirectDir = new JLabel("Indirect Director: ");
         JButton dir = new JButton("calculate");
         
         panel6.add(Box.createRigidArea(new Dimension(20,0)));
@@ -170,9 +185,6 @@ public class AnalysisView {
         
         JPanel panel7 = new JPanel();
 
-
-       
-        
         panel7.setLayout(new BoxLayout(panel7, BoxLayout.X_AXIS));
         panel7.setAlignmentX(Component.LEFT_ALIGNMENT);
         JTextField act = new JTextField(10);
@@ -187,13 +199,26 @@ public class AnalysisView {
         panel7.add(act);
         panel7.add(Box.createRigidArea(new Dimension(20,0)));
         panel7.add(indirect);
-        
-        
-        
-        
-        
-        
-        
+
+        ////////////////////////////////////////////////////////////////
+        //Hollywood pairs
+        JPanel panel8 = new JPanel();
+        panel8.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panel8.setLayout(new BoxLayout(panel8, BoxLayout.X_AXIS));
+        JLabel HPLabel = new JLabel("Hollywood Pairs");
+        JButton HPCalc = new JButton("Calculate");
+        panel8.add(Box.createRigidArea(new Dimension(20,0)));
+        panel8.add(HPLabel);
+        panel8.add(Box.createRigidArea(new Dimension(5,0)));
+        panel8.add(HPCalc);
+
+        // JPanel panel9 = new JPanel();
+        // panel9.setAlignmentX(Component.LEFT_ALIGNMENT);
+        // panel9.setLayout(new BoxLayout(panel9, BoxLayout.X_AXIS));
+        // JLabel HPLabel = new JLabel("Hollywood Pairs");
+        // JButton HPCalc = new JButton("Calculate");
+
+        //Spacing and display 
         panel.add(panel2);
         panel.add(panel3);
         panel.add(Box.createRigidArea(new Dimension(0,20)));
@@ -210,12 +235,9 @@ public class AnalysisView {
         panel.add(panel6);
         panel.add(Box.createRigidArea(new Dimension(20,20)));
         panel.add(panel7);
-        
-   
-        
-        
-        
-        
+        panel.add(Box.createRigidArea(new Dimension(20,20)));
+        panel.add(panel8);
+        panel.add(Box.createRigidArea(new Dimension(20,20)));
         
         analysisView.add(Box.createVerticalStrut(50)); // strut for visibility
         Container contentPane = frame.getContentPane();
@@ -226,6 +248,73 @@ public class AnalysisView {
         frame.pack();
         frame.setVisible(true);
 		
+        //////////////////////////////////////////////////////////////////
+        //listeners section
+        //Adds the listener for the top rated movies
+        calculate.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String startDate = fromDate.getText();
+                String endDate = toDate.getText();
+                ResultSet toprates = sqlQuery.TopRatedMovies(startDate, endDate); 
+                try {
+                    int i=0;
+                    while (toprates.next()) {
+                        History[i].setText(toprates.getString(1));
+                        i++;
+                    }
+                } catch (Exception err) {
+                    System.out.println(err);
+                }
+            }
+         });
+
+        //Adds the Listener for recommendation
+        // tomato.addActionListener(new ActionListener() {
+        //     public void actionPerformed(ActionEvent e) {
+        //         String titleA = t1.getText();
+        //         String titleB = t2.getText();
+        //         freshTomatoNumber(this, titleA, titleB);
+        //         // ResultSet recs = sqlQuery.TopRecommendations(uid); 
+        //         // try {
+        //         //     int i=0;
+        //         //     while (recs.next()) {
+        //         //         recommendations[i].setText(recs.getString(1));
+        //         //         i++;
+        //         //     }
+        //         // } catch (Exception err) {
+        //         //     System.out.println(err);
+        //         // }
+        //     }
+        // });
+
+        //Adds the listener for not to Watch
+        cult.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                ResultSet recs = sqlQuery.CultClassics(); 
+                try {
+                    int i=0;
+                    while (recs.next()) {
+                        list[i].setText(recs.getString(1));
+                        i++;
+                    }
+                } catch (Exception err) {
+                    System.out.println(err);
+                }
+            }
+        });
+
+        dir.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String actor =act.getText();
+                Map<String,ArrayList<String>> recs = sqlQuery.dataForIndirectDirector(actor); 
+            }
+        });
+
+        HPCalc.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Graph recs = sqlQuery.graphForHollyWoodPairs(); 
+            }
+        });
 		//Did not know where to put this, this is the hollywood pairs query.
         // // System.out.println(tomatoObj.freshTomatoNumber("Justice League","Rambo: First Blood Part II"));
         // sqlQuery = new query();
@@ -236,4 +325,59 @@ public class AnalysisView {
 
 	
 
+	// public static ArrayList<String> freshTomatoNumber(AnalysisView thisObj, String src, String dest) {
+	// 	ArrayList<String> path = new ArrayList<String>();
+	// 	LinkedList<String> queue = new LinkedList<String>(); 
+	// 	Map<String, List<String> > map = thisObj.graph.map;
+	// 	HashSet<String> visited = new HashSet<>();
+	// 	Map<String,String> pred = new HashMap<>();
+	// 	boolean connected = false;
+
+	// 	// pred.put("null", src);
+	// 	queue.add(src);
+	// 	visited.add(src);
+	// 	while (!queue.isEmpty()) {
+    //         String u = queue.remove();
+	// 		for (String w : map.get(u)) {
+	// 			// System.out.println(map.get(u));
+	// 			// System.out.println(visited.contains(w));
+	// 			if (visited.contains(w) == false) {
+	// 				// System.out.println("w: " + w);
+	// 				visited.add(w);
+    //                 pred.put(u, w);
+    //                 queue.add(w);
+ 
+    //                 // stopping condition (when we find
+    //                 // our destination)
+    //                 if (w.equals(dest)) {
+	// 					connected = true;
+	// 					// System.out.println(dest + " " + w);
+    //                 	break;
+	// 				}
+						
+    //             }
+    //         }
+	// 		// System.out.println("queue: " + queue);
+            
+    //     }
+	// 	if(connected){
+	// 		String v = src;
+	// 		while(!v.equals(dest)) {
+	// 			path.add(v);
+	// 			v = pred.get(v);
+	// 		}
+	// 		path.add(dest);
+	// 	}
+	// 	else {
+	// 		System.out.println(visited);
+	// 		System.out.println(pred);
+	// 		System.out.println("Given source and destination are not connected");
+	// 	}
+		
+
+	// 	// System.out.println("Graph:\n"
+    //     //                    + thisObj.graph.toString());
+	// 	return path;
+
+	// }
 }
