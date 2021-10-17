@@ -24,9 +24,20 @@ import java.util.Map;
 import java.util.LinkedList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Stack;
 // creating a class GroupLayoutExample
 public class AnalysisView {
-	
+    private static query sqlQuery;
+    private static freshTomatoNumber tomatoGraph;
+    private static HollywoodPairs hollywoodPairsGraph;
+    //private static String DIRECTOR;
+	public AnalysisView(){
+        sqlQuery = new query();
+        tomatoGraph = new freshTomatoNumber();
+        hollywoodPairsGraph = new HollywoodPairs();
+        System.out.println("HERE");
+        // DIRECTOR = "";
+    }
 	// Main Method
 	public static void main(String[] args)
 	{
@@ -34,7 +45,6 @@ public class AnalysisView {
        //Toplevel
         JFrame frame = new JFrame("Analysis View");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        query sqlQuery = new query();
 
         JPanel analysisView = new JPanel();
         analysisView.setLayout(new BoxLayout(analysisView, BoxLayout.Y_AXIS));
@@ -85,12 +95,22 @@ public class AnalysisView {
 		
 		
        // scroll.setLayout(new GridLayout(n, 10, 0, 0));
-        scroll.setLayout(new BoxLayout(scroll, BoxLayout.X_AXIS));
+        //scroll.setLayout(new BoxLayout(scroll, BoxLayout.X_AXIS));
+        GridBagConstraints gbc = new GridBagConstraints();
+        //gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.gridx=0;
+        gbc.gridy=0;
+        gbc.ipady = 40;
+        gbc.ipadx=20;
+        gbc.gridheight = 0;
+        scroll.setLayout(new GridBagLayout());
 
         for (int i=0; i<n; i++)
         {
-            History[i] = new JButton("MOVIE");
-            scroll.add(History[i]);
+            History[i] = new JButton("");
+            scroll.add(History[i], gbc);
+            gbc.gridx+=1;
         } 
         
         topTen = new JScrollPane(scroll);
@@ -151,8 +171,8 @@ public class AnalysisView {
         
         JScrollPane top20 = new JScrollPane();        
 		JPanel scroll2 = new JPanel();
-		int n2 = 50; // default value that should change
-		JButton[] list = new JButton[n];
+		int n2 = 20; // default value that should change
+		JButton[] list = new JButton[n2];
 		
 		
        // scroll.setLayout(new GridLayout(n, 10, 0, 0));
@@ -192,8 +212,7 @@ public class AnalysisView {
         act.setBounds(310, 130, 200, 30);
         act.setMaximumSize(act.getPreferredSize());
         JLabel actor = new JLabel("actor:");
-        String DIRECTOR = "";
-        JLabel indirect = new JLabel("Indirect Director: " + DIRECTOR);
+        JLabel indirect = new JLabel("Indirect Director: ");
         
         panel7.add(Box.createRigidArea(new Dimension(20,0)));
         panel7.add(actor);
@@ -270,23 +289,33 @@ public class AnalysisView {
          });
 
         //Adds the Listener for recommendation
-        // tomato.addActionListener(new ActionListener() {
-        //     public void actionPerformed(ActionEvent e) {
-        //         String titleA = t1.getText();
-        //         String titleB = t2.getText();
-        //         freshTomatoNumber(this, titleA, titleB);
-        //         // ResultSet recs = sqlQuery.TopRecommendations(uid); 
-        //         // try {
-        //         //     int i=0;
-        //         //     while (recs.next()) {
-        //         //         recommendations[i].setText(recs.getString(1));
-        //         //         i++;
-        //         //     }
-        //         // } catch (Exception err) {
-        //         //     System.out.println(err);
-        //         // }
-        //     }
-        // });
+        tomato.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String titleA = t1.getText();
+                String titleB = t2.getText();
+                Stack<String> output = tomatoGraph.freshTomatoNumber(titleA, titleB);
+                String chainDisplay = "";
+                if (output.empty()){
+                    chainDisplay = "No connection was found";
+                }
+                chainDisplay = output.pop();
+                while (!output.empty()){
+                    chainDisplay =chainDisplay+"->"+output.pop();
+                    //chainDisplay=chainDisplay;
+                }
+                JOptionPane.showMessageDialog(null, chainDisplay);
+                // ResultSet recs = sqlQuery.TopRecommendations(uid); 
+                // try {
+                //     int i=0;
+                //     while (recs.next()) {
+                //         recommendations[i].setText(recs.getString(1));
+                //         i++;
+                //     }
+                // } catch (Exception err) {
+                //     System.out.println(err);
+                // }
+            }
+        });
 
         //Adds the listener for not to Watch
         cult.addActionListener(new ActionListener(){
@@ -307,78 +336,30 @@ public class AnalysisView {
         dir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String actor =act.getText();
-                Map<String,ArrayList<String>> recs = sqlQuery.dataForIndirectDirector(actor); 
+                indirectDirector directorList = new indirectDirector();
+                String DIRECTOR = directorList.indirectDirector(actor);
+                indirect.setText("Indirect Director: "+DIRECTOR);
+                // System.out.println(DIRECTOR);
+                // System.out.println("HERE");
+                //Map<String,ArrayList<String>> recs = sqlQuery.dataForIndirectDirector(actor); 
             }
         });
 
         HPCalc.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Graph recs = sqlQuery.graphForHollyWoodPairs(); 
+                ArrayList<String> recs = hollywoodPairsGraph.GetTop10Pairs();
+                String display = "<HTML><U>Actor1, Actor2:</U></HTML>";
+                for (String pair : recs) {
+                    System.out.println(pair);
+                    display+=pair+'\n';
+                } 
+                JOptionPane.showMessageDialog(null, display);
             }
         });
 		//Did not know where to put this, this is the hollywood pairs query.
         // // System.out.println(tomatoObj.freshTomatoNumber("Justice League","Rambo: First Blood Part II"));
         // sqlQuery = new query();
                 
-        // Graph<String> hollywoodPairsGraph = sqlQuery.graphForHollyWoodPairs();
         // hollywoodPairsGraph.printDecimalWeightedMap();		
 	}
-
-	
-
-	// public static ArrayList<String> freshTomatoNumber(AnalysisView thisObj, String src, String dest) {
-	// 	ArrayList<String> path = new ArrayList<String>();
-	// 	LinkedList<String> queue = new LinkedList<String>(); 
-	// 	Map<String, List<String> > map = thisObj.graph.map;
-	// 	HashSet<String> visited = new HashSet<>();
-	// 	Map<String,String> pred = new HashMap<>();
-	// 	boolean connected = false;
-
-	// 	// pred.put("null", src);
-	// 	queue.add(src);
-	// 	visited.add(src);
-	// 	while (!queue.isEmpty()) {
-    //         String u = queue.remove();
-	// 		for (String w : map.get(u)) {
-	// 			// System.out.println(map.get(u));
-	// 			// System.out.println(visited.contains(w));
-	// 			if (visited.contains(w) == false) {
-	// 				// System.out.println("w: " + w);
-	// 				visited.add(w);
-    //                 pred.put(u, w);
-    //                 queue.add(w);
- 
-    //                 // stopping condition (when we find
-    //                 // our destination)
-    //                 if (w.equals(dest)) {
-	// 					connected = true;
-	// 					// System.out.println(dest + " " + w);
-    //                 	break;
-	// 				}
-						
-    //             }
-    //         }
-	// 		// System.out.println("queue: " + queue);
-            
-    //     }
-	// 	if(connected){
-	// 		String v = src;
-	// 		while(!v.equals(dest)) {
-	// 			path.add(v);
-	// 			v = pred.get(v);
-	// 		}
-	// 		path.add(dest);
-	// 	}
-	// 	else {
-	// 		System.out.println(visited);
-	// 		System.out.println(pred);
-	// 		System.out.println("Given source and destination are not connected");
-	// 	}
-		
-
-	// 	// System.out.println("Graph:\n"
-    //     //                    + thisObj.graph.toString());
-	// 	return path;
-
-	// }
 }

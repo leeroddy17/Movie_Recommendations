@@ -40,9 +40,11 @@ public class HollywoodPairs {
                 }
             }
             String pair = maxActor + "," + maxCostar;
-            System.out.println(pair);
+            //System.out.println(pair);
             //graph.decimal_weighted_map.get(maxActor).remove(maxCostar);
-            graph.decimal_weighted_map.remove(maxActor);
+            graph.decimal_weighted_map.get(maxCostar).remove(maxActor);
+            graph.decimal_weighted_map.get(maxActor).remove(maxCostar);
+            topPairs.add(pair);
         }
 
         return topPairs;

@@ -145,11 +145,7 @@ public class query {
         return result;
     }
 
-<<<<<<< HEAD
     public Map<String, ArrayList<String> > dataForIndirectDirector(String actor) {
-=======
-    public ResultSet TopRecommendations(int customerid) {
->>>>>>> origin/HollywoodPairs
         conn = new Connect();
         Map<String,ArrayList<String>> actorsDirectors = new HashMap<>();
         try {
@@ -182,14 +178,15 @@ public class query {
                     ArrayList<String> directors = new ArrayList<>();
                     ArrayList<String> actors = new ArrayList<>();
                     while(a.equals(temp3.getString(3))){
+                        if(!temp3.next()) {
+                            check = false;
+                            break;
+                        }
                         if(temp3.getString(2).equals("director")) {
                             directors.add(temp3.getString(1));
                         }
                         else {
                             actors.add(temp3.getString(1));
-                        }
-                        if(!temp3.next()) {
-                            check = false;
                         }
                     }
                     for (String director : directors) {
@@ -346,18 +343,19 @@ public class query {
             try {
                 boolean check = true;
                 String title = "";
+                ArrayList<String> actors = new ArrayList<>();
                 result.next();
 
                 while(check) {
                     title = result.getString(2);
-                    ArrayList<String> actors = new ArrayList<>();
                     Double weight = Double.valueOf(result.getString(3));
 
                     while(title.equals(result.getString(2))) {
-                        actors.add(result.getString(1));
                         if(!result.next()) {
                             check = false;
+                            break;
                         }
+                        actors.add(result.getString(1));
                     }
 
                     for (int i=0; i<actors.size()-1; i++) {
