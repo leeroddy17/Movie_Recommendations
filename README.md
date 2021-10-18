@@ -1,6 +1,10 @@
-# CSCE_315_Project_2
+# Movie Recommendations
 
-Cleaner Contains the raw data as well as the cleaner functions implemented in python.
+This project involves taking viewer history data, and building a recommendation interface using JavaSwing to recommend new movies to a user based on their past ratings.
+
+Cleaner Contains the raw data as well as the cleaner functions implemented in python, which we then moved over to a database.
+
+
 
 To run:
 Compilation:
